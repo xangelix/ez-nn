@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>EZ-NN!</title>
+    <style>
+      #log {
+        white-space: pre;
+      }
+    </style>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+
+    <script>
+      window.$ = window.jQuery = require('jquery');
+    </script>
+    <script type="text/javascript" src="materialize/js/hammer.min.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
+<!--
+    <script>
+        $(function ReadTemperature() {
+            $.ajax({
+                url: "http://my-server/cgi-bin/fetchVar.py",
+                type: "post",
+                datatype: "html",
+                data: {
+                    webArguments: "aiTemperature" //Arguments you want to send to your .py
+                },
+                success: function(response){
+                        $("#response").html(response);
+                },
+                complete: function() {
+                    setTimeout(ReadTemperature, 2000);   //Refresh value every 2 seconds
+                }
+            });
+        });
+    </script> -->
+    <script>
+    $(() => {
+      $('#testPic').click(() => {
+        var spawn = require('child_process').spawn,
+            child = spawn('cmd', ['/c', `cd tf/ && C:/Users/Cody/Anaconda3/python.exe -m scripts.label_image --graph=tf_files/retrained_graph.pb --image=tf_files/flower_photos/daisy/21652746_cc379e0eea_m.jpg`]);
+
+          child.stdout.on('data', function (data) {
+            console.log('stdout: ' + data.toString());
+            document.getElementById("log").innerHTML += data.toString();
+          });
+
+          child.stderr.on('data', function (data) {
+            console.log('stderr: ' + data.toString());
+          });
+
+          child.on('exit', function (code) {
+            console.log('child process exited with code ' + code.toString());
+          });
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <h1>EZ Neural Networks</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <u>Using</u><br /><br />
+    Node.js <script>document.write(process.versions.node)</script><br />
+    Chromium <script>document.write(process.versions.chrome)</script><br />
+    Electron <script>document.write(process.versions.electron)</script><br /><br />
+
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
+    <br />
+    <a id="testPic" class="waves-effect waves-light btn">Test Picture</a>
+    <div id="log">
+
+    </div>
+    <!--Current temperature: <div id="response"></div> °C. -->
+
+  </body>
+</html>

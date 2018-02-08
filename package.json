@@ -1,0 +1,23 @@
+{
+  "name": "ez-nn",
+  "version": "0.0.1",
+  "description": "An easy nn.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Matrix-Guy/ez-nn",
+  "keywords": [
+    "Electron",
+    "ez-nn"
+  ],
+  "author": "Cody",
+  "license": "LICENSE",
+  "devDependencies": {
+    "electron": "~1.7.8"
+  },
+  "dependencies": {
+    "hammer": "0.0.5",
+    "jquery": "^3.3.1"
+  }
+}
