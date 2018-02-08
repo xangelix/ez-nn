@@ -39,27 +39,7 @@
             });
         });
     </script> -->
-    <script>
-    $(() => {
-      $('#testPic').click(() => {
-        var spawn = require('child_process').spawn,
-            child = spawn('cmd', ['/c', `cd tf/ && C:/Users/Cody/Anaconda3/python.exe -m scripts.label_image --graph=tf_files/retrained_graph.pb --image=tf_files/flower_photos/daisy/21652746_cc379e0eea_m.jpg`]);
-
-          child.stdout.on('data', function (data) {
-            console.log('stdout: ' + data.toString());
-            document.getElementById("log").innerHTML += data.toString();
-          });
-
-          child.stderr.on('data', function (data) {
-            console.log('stderr: ' + data.toString());
-          });
-
-          child.on('exit', function (code) {
-            console.log('child process exited with code ' + code.toString());
-          });
-      });
-    });
-    </script>
+    <script type="text/javascript" src="tf.js"></script>
   </head>
   <body>
     <h1>EZ Neural Networks</h1>
