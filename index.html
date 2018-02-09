@@ -3,11 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <title>EZ-NN!</title>
-    <style>
-      #log {
-        white-space: pre;
-      }
-    </style>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -19,6 +14,22 @@
     </script>
     <script type="text/javascript" src="materialize/js/hammer.min.js"></script>
     <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+    <style>
+      #log {
+        white-space: pre;
+      }
+
+      h1, h4, h5 {
+        text-align: center;
+      }
+
+      .btn {
+        position: absolute;
+        left: 0px;
+        width: 50%;
+        transform: translate(+50%, +50%);
+      }
+    </style>
 
 <!--
     <script>
@@ -44,17 +55,33 @@
   <body>
     <h1>EZ Neural Networks</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
-    <u>Using</u><br /><br />
-    Node.js <script>document.write(process.versions.node)</script><br />
-    Chromium <script>document.write(process.versions.chrome)</script><br />
-    Electron <script>document.write(process.versions.electron)</script><br /><br />
-
+    <h4><u>Using</u></h4>
+    <h5>
+      Node.js <script>document.write(process.versions.node)</script><br />
+      Chromium <script>document.write(process.versions.chrome)</script><br />
+      Electron <script>document.write(process.versions.electron)</script><br /><br />
+    </h5>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
     </script>
-    <br />
-    <a id="testPic" class="waves-effect waves-light btn">Test Picture</a>
+    <div class="loading">
+      <br /><br />
+      <h4>Loading... Please wait!</h4>
+    </div>
+    <div class="startTensorBoard">
+      <br /><br />
+      <a id="startTensorBoard" class="waves-effect waves-light btn">Start TensorBoard</a>
+    </div>
+    <div class="createNeuralNetwork">
+      <br /><br />
+      <a id="createNeuralNetwork" class="waves-effect waves-light btn">Create Neural Network</a>
+    </div>
+    <div class="testPic">
+      <br /><br />
+      <a id="testPic" class="waves-effect waves-light btn">Test Picture</a>
+    </div>
+
     <div id="log">
 
     </div>
