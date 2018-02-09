@@ -35,8 +35,7 @@ $(() => {
     if (isWin) {
       child = spawn('cmd', ['/c', `cd tf/ && activate tensorflow && tensorboard --logdir tf_files/training_summaries &`]);
     } else {
-      child = spawn('bash', ['-c', `cd tf/ && source ~/tensorflow/bin/activate
-      && tensorboard --logdir tf_files/training_summaries &`]);
+      child = spawn('bash', ['-c', `cd tf/ && source ~/tensorflow/bin/activate && tensorboard --logdir tf_files/training_summaries &`]);
     }
 
       child.stdout.on('data', function (data) {
