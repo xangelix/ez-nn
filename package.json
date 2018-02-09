@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "hammer": "0.0.5",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "remote": "^0.2.6"
   }
 }
