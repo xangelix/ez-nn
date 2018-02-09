@@ -12,13 +12,14 @@
     "ez-nn"
   ],
   "author": "Cody",
-  "license": "LICENSE",
+  "license": "AGPL-3.0-only",
   "devDependencies": {
-    "electron": "~1.7.8"
+    "electron": "~1.8.2"
   },
   "dependencies": {
     "hammer": "0.0.5",
     "jquery": "^3.3.1",
-    "remote": "^0.2.6"
+    "remote": "^0.2.6",
+    "send": "^0.16.2"
   }
 }
