@@ -19,7 +19,8 @@
   "dependencies": {
     "hammer": "0.0.5",
     "jquery": "^3.3.1",
+    "ps-node": "^0.1.6",
     "remote": "^0.2.6",
-    "send": "^0.16.2"
+    "string-format": "^0.5.0"
   }
 }
