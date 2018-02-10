@@ -1,0 +1,70 @@
+#log {
+  display: block;
+  height: 400px;
+  margin: 0 auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 50%;
+  word-break: break-all;
+}
+
+h1, h4, h5 {
+  text-align: center;
+}
+
+.btn {
+  left: 0px;
+  overflow: hidden;
+  position: absolute;
+  transform: translate(+50%, +50%);
+  width: 50%;
+}
+
+#loading {
+  display: block;
+  margin: 0 auto;
+  white-space: pre-wrap
+}
+
+.btn:hover:before {
+  opacity:1;
+}
+
+.customCSS:before {
+  background-color: #fb8c00;
+  content: '';
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity .2s;
+  width: 100%;
+  z-index: -1;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(69,90,100,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(69,90,100,0.5);
+}
+
+::-moz-selection { background: #ffa726; color: #455a64; }
+::selection { background: #ffa726; color: #455a64; }
+
+#startTensorBoard:before { background-color: #fb8c00; }
+
+#stopTensorBoard:before { background-color: #f4511e; }
+
+#createNeuralNetwork:before { background-color: #7cb342; }
+
+body {
+  display: none;
+}
