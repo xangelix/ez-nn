@@ -16,11 +16,15 @@ const isWin = process.platform === "win32",
 const ipcRenderer = require('electron').ipcRenderer,
       spawn = require('child_process').spawn,
       {dialog} = require('electron').remote,
-      format = require('string-format');
+      _ = require('lodash'),
+      format = require('string-format'),
+      fs = require('fs');
 
 format.extend(String.prototype);
 
 let tBLogDir = 'tf_files/training_summaries';
+let fRetrainedGraphPB = 'tf/tf_files/retrained_graph.pb';
+let retrainedGraphPB = 'tf_files/retrained_graph.pb';
 let imgDir;
 
 // Global child processes
@@ -36,15 +40,21 @@ function updateLog(data) {
 }
 
 
+// Formats confidence to percentage
+function percentMe(num) {
+  return (Math.round(Number(num) * 10000) / 100) + '%';
+}
+
 // jQuery on DOM load
 $(() => {
 
   // Hides options that can't be used yet
+  fs.stat(fRetrainedGraphPB, (err) => { if (err) { $('.testPic').hide(); } });
   $('.createNeuralNetwork').hide();
   $('.loading').hide();
-  $('.testPic').hide();
   $('.stopTensorBoard').hide();
   $('.options').hide();
+  $('#log').hide();
 
   // Fade-in to avoid user seeing options before DOM load
   $("body").fadeIn(2000);
@@ -53,14 +63,19 @@ $(() => {
   // About button on click
   $('#about').click(() => {
 
+    $('#log').slideToggle();
+
     // Logs all package info
+    /*
     if (debug) {
       require('child_process').exec('npm ls --json', function(err, stdout, stderr) {
         if (err) return console.log(err);
         updateLog(JSON.stringify(stdout));
       });
     }
+    */
   });
+
 
   // Start TensorBoard button on click
   $('#startTensorBoard').click(() => {
@@ -114,7 +129,7 @@ $(() => {
   });
 
   $('#settings').click(() => {
-    $('.options').slideToggle(0);
+    $('.options').slideToggle(70);
   });
 
   $('.browse').click(() => {
@@ -130,19 +145,30 @@ $(() => {
 
   $('#testPic').click(() => {
 
-    dialog.showOpenDialog({ filters: [ { name: 'JPG Images', extensions: ['jpg'] } ] }, (data) => {
-      if (isWin) {
-        console.log(`cd tf/ && python -m scripts.label_image --graph=tf_files/retrained_graph.pb --image=` + data);
-        child1 = spawn(shellType, [shellFlag, `cd tf/ && python -m scripts.label_image --graph=tf_files/retrained_graph.pb --image=` + data]);
-      } else {
-        child1 = spawn(shellType, [shellFlag, `cd tf/ && python -m scripts.label_image
-        --graph=tf_files/retrained_graph.pb
-        --image=${data}`]);
-      }
+    dialog.showOpenDialog({ filters: [ { name: 'JPG Images', extensions: ['jpg'] } ] }, (data1) => {
 
+      child1 = spawn(shellType, [shellFlag, tfChangeDir + `python -m scripts.label_image --graph=` + retrainedGraphPB + ` --image=` + data1]);
         child1.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
           updateLog(data.toString());
+          if (data.includes(`Evaluation time (1-image):`)) {
+            let results = data.toString().substring(data.indexOf("s") + 1, data.length).trim().split('\n');
+            results = results.map((val) => {
+              return val.split(' ');
+            });
+            _.chunk(results, 2);
+            /*
+            results.sort((a, b) => {
+              if (a[1] === b[1]) {
+                return 0;
+              }
+              else {
+                return (a[1] < b[1]) ? -1 : 1;
+              }
+            });
+            */
+            $('.imgResults').html(resultsHTML.format(data1, results[0][0], percentMe(results[0][1]), results[1][0], percentMe(results[1][1]), results[2][0], percentMe(results[2][1]), results[3][0], percentMe(results[3][1]), results[4][0], percentMe(results[4][1])));
+          }
         });
 
         child1.stderr.on('data', function (data) {
@@ -151,8 +177,8 @@ $(() => {
         });
 
         child1.on('exit', function (code) {
-          console.log('child process exited with code ' + code.toString());
-          updateLog(data.toString());
+          console.log('child process exited with code ' + code);
+          updateLog(code.toString());
         });
     });
 
@@ -172,8 +198,10 @@ $(() => {
 
       child2.stdout.on('data', function (data) {
         console.log('stdout: ' + data.toString());
+        if (data.includes(`variables to const ops.`)) {
+          $('.testPic').fadeIn(1500);
+        }
         //updateLog(data.toString());
-        $('.testPic').fadeIn(1500);
       });
 
       child2.stderr.on('data', function (data) {
@@ -184,10 +212,78 @@ $(() => {
       child2.on('exit', function (code) {
         console.log('child process exited with code ' + code.toString());
         //updateLog('child process exited with code ' + code.toString());
+        $('.loading').hide();
       });
     } else {
       console.log('need more params');
     }
 
   });
+
+  const resultsHTML = `
+    <section class="container">
+      <div class="left-half">
+        <article>
+          <h1>Test Picture</h1>
+          <img width="200" height="200" src="{0}" />
+        </article>
+      </div>
+      <div class="right-half">
+        <article><br /><br />
+          <h1 class="resultsHead">Results</h1>
+          <table class="resultsTable">
+            <tr>
+              <td>
+                Guess:
+              </td>
+              <td>
+                Confidence:
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {1}
+              </td>
+              <td>
+                {2}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {3}
+              </td>
+              <td>
+                {4}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {5}
+              </td>
+              <td>
+                {6}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {7}
+              </td>
+              <td>
+                {8}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {9}
+              </td>
+              <td>
+                {10}
+              </td>
+            </tr>
+          </table>
+        </article>
+      </div>
+    </section>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    `;
 });
