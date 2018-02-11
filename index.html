@@ -12,7 +12,7 @@
     <script>
       window.$ = window.jQuery = require('jquery');
     </script>
-    
+
     <script src="node_modules/string-format/lib/string-format.js"></script>
     <script type="text/javascript" src="materialize/js/hammer.min.js"></script>
     <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
@@ -28,32 +28,47 @@
       Chromium <script>document.write(process.versions.chrome)</script><br />
       Electron <script>document.write(process.versions.electron)</script>
     </h5>
-    <script>
-      require('./renderer.js')
-    </script>
     <div class="loading">
       <br /><br />
       <img id="loading" src="img/loading.gif" alt="loading..." />
     </div>
     <div class="startTensorBoard">
-      <br /><br />
-      <a id="startTensorBoard" class="waves-effect waves-light btn customCSS orange darken-3">Start TensorBoard</a>
+      <a id="startTensorBoard" class="waves-effect waves-light btn-large customCSS orange darken-3"><i class="center-align material-icons left">dns</i>Start TensorBoard</a>
     </div>
     <div class="stopTensorBoard">
-      <br /><br />
-      <a id="stopTensorBoard" class="waves-effect waves-light customCSS btn deep-orange darken-3">Stop TensorBoard</a>
+      <a id="stopTensorBoard" class="waves-effect waves-light customCSS btn-large deep-orange darken-3"><i class="center-align material-icons left">stop</i>Stop TensorBoard</a>
     </div>
     <div class="createNeuralNetwork">
-      <br /><br />
-      <a id="createNeuralNetwork" class="waves-effect waves-light btn customCSS light-green darken-3">Create Neural Network</a>
+      <br /><br /><br />
+      <a id="createNeuralNetwork" class="waves-effect waves-light btn-large customCSS light-green darken-3"><i class="center-align material-icons left">developer_board</i>Create Neural Network</a>
     </div>
     <div class="testPic">
-      <br /><br />
-      <a id="testPic" class="waves-effect waves-light btn">Test Picture</a>
+      <br /><br /><br />
+      <a id="testPic" class="waves-effect waves-light btn-large"><i class="center-align material-icons left">help_outline</i>Test Picture</a>
+    </div>
+    <div class="settings">
+      <br /><br /><br />
+      <a id="settings" class="waves-effect waves-light btn-large"><i class="center-align material-icons left">settings</i>Settings</a>
+      <div class="options">
+        <br /><br /><br />
+        <hr />
+        <div class="col s12 settings-text">
+          <div class="input-field">
+            <a id="photoLibrary" class="waves-effect waves-light btn-large customCSS indigo darken-3 browse"><i class="center-align material-icons left">photo_library</i>Browse</a><br />
+            <input class="photosDirectory" type="text" style="width: 62%;">
+            <label class="labeling">Photos Directory</label>
+            <br />
+            <!-- <a id="logDirectory" class="waves-effect waves-light btn-large customCSS indigo darken-3 browseLogD"><i class="center-align material-icons left">subject</i>Browse</a><br />
+            <input class="logDirectory" type="text" style="width: 62%;">
+            <label class="labeling">Log Directory</label> -->
+          </div>
+        </div>
+        <hr class="hrClose" />
+      </div>
     </div>
     <div class="about">
-      <br /><br />
-      <a id="about" class="waves-effect waves-light btn">Log About</a>
+      <br /><br /><br />
+      <a id="about" class="waves-effect waves-light btn-large customCSS blue-grey darken-2"><i class="center-align material-icons left">help_outline</i>Log About</a>
     </div>
     <br /><br /><br /><br />
     <div id="log">
