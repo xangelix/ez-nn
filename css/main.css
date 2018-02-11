@@ -13,12 +13,16 @@ h1, h4, h5 {
   text-align: center;
 }
 
-.btn {
-  left: 0px;
+.btn-large {
   overflow: hidden;
   position: absolute;
   transform: translate(+50%, +50%);
   width: 50%;
+}
+
+.material-icons{
+    display: inline-flex;
+    vertical-align: top;
 }
 
 #loading {
@@ -27,8 +31,25 @@ h1, h4, h5 {
   white-space: pre-wrap
 }
 
-.btn:hover:before {
+.btn-large:hover:before {
   opacity:1;
+}
+
+.settings-text {
+  height: 20px;
+  position: relative;
+}
+
+.browse {
+  overflow: hidden;
+  position: absolute;
+  transform: translate(+87%, +50%);
+  width: 60%;
+}
+
+.options {
+  transform: translate(+75%, +12%);
+  width: 40%;
 }
 
 .customCSS:before {
@@ -65,6 +86,33 @@ h1, h4, h5 {
 
 #createNeuralNetwork:before { background-color: #7cb342; }
 
+#about:before { background-color: #607d8b; }
+
+#photoLibrary:before { background-color: #3949ab; }
+
 body {
   display: none;
+}
+
+.photosDirectory {
+  transform: translate(-20%, +20%);
+}
+
+.labeling {
+  color: #424242 !important;
+  left: -12% !important;
+  top: +38% !important;
+}
+
+hr {
+  background-color: #616161;
+  border: none;
+  color: #333;
+  height: 5px;
+  transform: translate(-10%, +200%);
+  width: 125%;
+}
+
+.hrClose {
+  transform: translate(-10%, +1400%);
 }
