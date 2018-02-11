@@ -18,6 +18,7 @@ const ipcRenderer = require('electron').ipcRenderer,
       {dialog} = require('electron').remote,
       _ = require('lodash'),
       format = require('string-format'),
+      request = require('request'),
       fs = require('fs');
 
 format.extend(String.prototype);
@@ -48,11 +49,18 @@ function percentMe(num) {
 // jQuery on DOM load
 $(() => {
 
+  request('localhost:6006', (err, res, body) => {
+  if (!res) {
+    $('.stopTensorBoard').hide();
+  }
+  console.log('statusCode:', res && res.statusCode);
+  console.log('body:', body);
+  });
+
   // Hides options that can't be used yet
   fs.stat(fRetrainedGraphPB, (err) => { if (err) { $('.testPic').hide(); } });
   $('.createNeuralNetwork').hide();
   $('.loading').hide();
-  $('.stopTensorBoard').hide();
   $('.options').hide();
   $('#log').hide();
 
@@ -85,19 +93,6 @@ $(() => {
       $('.startTensorBoard').hide();
       $('.loading').fadeIn(400);
       child = spawn(shellType, [shellFlag, tfChangeDir + shellSource + startTBLogDirFlag + tBLogDir]);
-
-      ipcRenderer.on('closing-message', function(event, arg) {
-        console.log(arg);
-        child.kill('SIGINT');
-        event.sender.send('closing-reply', 'pong');
-      });
-
-      $('#stopTensorBoard').click(() => {
-        $('.stopTensorBoard').hide();
-        $('.createNeuralNetwork').hide();
-        child.kill('SIGINT');
-        console.log('attempt');
-      });
 
         child.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
@@ -141,6 +136,13 @@ $(() => {
         imgDir = data;
       }
     });
+  });
+
+  $('#stopTensorBoard').click(() => {
+    $('.stopTensorBoard').hide();
+    $('.createNeuralNetwork').hide();
+    child.kill('SIGINT');
+    console.log('attempt');
   });
 
   $('#testPic').click(() => {
