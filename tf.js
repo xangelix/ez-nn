@@ -49,12 +49,10 @@ function percentMe(num) {
 // jQuery on DOM load
 $(() => {
 
-  request('localhost:6006', (err, res, body) => {
-  if (!res) {
+  request('http://localhost:6006/', (err, res, body) => {
+  if (!body) {
     $('.stopTensorBoard').hide();
   }
-  console.log('statusCode:', res && res.statusCode);
-  console.log('body:', body);
   });
 
   // Hides options that can't be used yet
