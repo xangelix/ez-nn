@@ -56,8 +56,12 @@ $(() => {
   request('http://localhost:6006/', (err, res, body) => {
     if (!body) {
       $('.stopTensorBoard').hide();
+      $('.testPic').hide();
       $('.createNeuralNetwork').hide();
     }
+
+    // Fade-in to avoid user seeing options before DOM load
+    $("body").fadeIn(2000);
   });
 
   // Hides options that can't be used yet
