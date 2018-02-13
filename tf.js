@@ -54,14 +54,20 @@ function percentMe(num) {
 $(() => {
 
   request('http://localhost:6006/', (err, res, body) => {
-  if (!body) {
-    $('.stopTensorBoard').hide();
-  }
+    if (!body) {
+      $('.stopTensorBoard').hide();
+      $('.createNeuralNetwork').hide();
+    }
   });
 
   // Hides options that can't be used yet
-  fs.stat(fRetrainedGraphPB, (err) => { if (err) { $('.testPic').hide(); } });
-  $('.createNeuralNetwork').hide();
+  fs.stat(fRetrainedGraphPB, (err) => {
+    if (err) {
+      $('.testPic').hide();
+      $('.cleanup').hide();
+    }
+  });
+
   $('.loading').hide();
   $('.options').hide();
   $('#log').hide();
