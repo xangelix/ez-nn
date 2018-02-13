@@ -145,17 +145,51 @@ $(() => {
   });
 
   $('#stopTensorBoard').click(() => {
-    $('.stopTensorBoard').hide();
-    $('.createNeuralNetwork').hide();
-    child.kill('SIGINT');
-    console.log('attempt');
+    request('http://localhost:6006/', (err, res, body) => {
+    if (body && !tBstarted) {
+      console.log('WARN: TensorBoard cannot be closed!');
+    } else if (body && tBstarted) {
+      $('.stopTensorBoard').hide();
+      $('.createNeuralNetwork').hide();
+      child.kill('SIGINT');
+      console.log('attempt');
+    } else {
+      $('.stopTensorBoard').hide();
+      $('.createNeuralNetwork').hide();
+    }
+    });
+  });
+
+  $('#cleanup').click(() => {
+    $('.testPic').hide();
+    $('.loading').fadeIn(400);
+    child3 = spawn(shellType, [shellFlag, rmType]);
+
+    child3.stdout.on('data', (data) => {
+      console.log('stdout: ' + data.toString());
+      //updateLog(data.toString());
+    });
+
+    child3.stderr.on('data', (data) => {
+      console.log('stderr: ' + data.toString());
+      //updateLog(data.toString());
+    });
+
+    child3.on('exit', (code) => {
+      console.log('child process exited with code ' + code.toString());
+      //updateLog('child process exited with code ' + code.toString());
+      $('.loading').hide();
+      $('.cleanup').hide();
+      $('.createNeuralNetwork').fadeIn(1500);
+    });
+
   });
 
   $('#testPic').click(() => {
 
     dialog.showOpenDialog({ filters: [ { name: 'JPG Images', extensions: ['jpg'] } ] }, (data1) => {
 
-      child1 = spawn(shellType, [shellFlag, tfChangeDir + `python -m scripts.label_image --graph=` + retrainedGraphPB + ` --image=` + data1]);
+      child1 = spawn(shellType, [shellFlag, tfCD + `python -m scripts.label_image --graph=` + retrainedGraphPB + ` --image=` + data1]);
         child1.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
           updateLog(data.toString());
@@ -217,6 +251,7 @@ $(() => {
         console.log('child process exited with code ' + code.toString());
         //updateLog('child process exited with code ' + code.toString());
         $('.loading').hide();
+        $('.cleanup').fadeIn(1500);
       });
     } else {
       console.log('need more params');
@@ -225,6 +260,7 @@ $(() => {
   });
 
   const resultsHTML = `
+  <br /><br /><br /><br /><br /><br /><br />
     <section class="container">
       <div class="left-half">
         <article>
