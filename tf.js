@@ -76,9 +76,6 @@ $(() => {
   $('.options').hide();
   $('#log').hide();
 
-  // Fade-in to avoid user seeing options before DOM load
-  $("body").fadeIn(2000);
-
 
   // About button on click
   $('#about').click(() => {
@@ -119,7 +116,11 @@ $(() => {
           console.log('stderr: ' + data.toString());
           if (data.includes(`(Press CTRL+C to quit)`)) {
             $('.loading').hide();
-            $('.createNeuralNetwork').fadeIn(1500);
+            if ($('.cleanup').is(":visible")) {
+              $('.testPic').fadeIn(1500);
+            } else {
+              $('.createNeuralNetwork').fadeIn(1500);
+            }
           }
           updateLog(data.toString());
           $('.stopTensorBoard').fadeIn(1500);
@@ -166,6 +167,7 @@ $(() => {
     } else {
       $('.stopTensorBoard').hide();
       $('.createNeuralNetwork').hide();
+      $('.startTensorBoard').fadeIn(1500);
     }
     });
   });
@@ -191,7 +193,9 @@ $(() => {
       //updateLog('child process exited with code ' + code.toString());
       $('.loading').hide();
       $('.cleanup').hide();
-      $('.createNeuralNetwork').fadeIn(1500);
+      if ($('.stopTensorBoard').is(":visible")) {
+        $('.createNeuralNetwork').fadeIn(1500);
+      }
     });
 
   });
