@@ -8,7 +8,7 @@ const isWin = process.platform === "win32",
       shellType = isWin ? 'cmd' : 'bash',
       shellFlag = isWin ? '/c' : '-c',
       shellSource = isWin ? 'activate tensorflow' : 'source ~/tensorflow/bin/activate',
-      rmType = isWin ? '' : 'rm -rf tf/tf_files/*',
+      rmType = isWin ? 'rd /s /q "tf/tf_files/" && mkdir tf/tf_files' : 'rm -rf tf/tf_files/*',
       createNNPrefix = 'cd tf/ && python -m scripts.label_image',
       tfCD = 'cd tf/ && ';
 
