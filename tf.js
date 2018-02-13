@@ -27,6 +27,10 @@ let tBLogDir = 'tf_files/training_summaries';
 let fRetrainedGraphPB = 'tf/tf_files/retrained_graph.pb';
 let retrainedGraphPB = 'tf_files/retrained_graph.pb';
 let imgDir;
+let tBstarted = false;
+let imageSize = '224';
+let architecture = '0.50';
+let steps = '500';
 
 // Global child processes
 let child;
@@ -192,13 +196,9 @@ $(() => {
     if (imgDir) {
       $('#createNeuralNetwork').hide();
       $('.stopTensorBoard').hide();
-      $('.loading').show();
-      var imageSize = '224';
-      var architecture = '0.50';
-      var steps = '500';
+      $('.loading').fadeIn(1500);
 
       child2 = spawn(shellType, [shellFlag, 'cd tf/ && python -m scripts.retrain --bottleneck_dir=tf_files/bottlenecks --how_many_training_steps=' + steps + ' --model_dir=tf_files/models/ --summaries_dir=tf_files/training_summaries/mobilenet_' + architecture + '_' + imageSize + ' --output_graph=tf_files/retrained_graph.pb --output_labels=tf_files/retrained_labels.txt --architecture=mobilenet_' + architecture + '_' + imageSize + ' --image_dir=' + imgDir]);
-
 
       child2.stdout.on('data', function (data) {
         console.log('stdout: ' + data.toString());
