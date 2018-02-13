@@ -86,11 +86,15 @@ $(() => {
   // Start TensorBoard button on click
   $('#startTensorBoard').click(() => {
 
+    tBstarted = true;
+
     // Available options updated
     if (tBLogDir) {
       $('.startTensorBoard').hide();
       $('.loading').fadeIn(400);
-      child = spawn(shellType, [shellFlag, tfChangeDir + shellSource + startTBLogDirFlag + tBLogDir]);
+      child = spawn(
+        shellType, [shellFlag, '{0}{1} && tensorboard --logdir {2}'.format(
+          tfCD, shellSource, tBLogDir)]);
 
         child.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
