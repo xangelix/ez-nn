@@ -168,7 +168,8 @@ $(() => {
 
   $('#cleanup').click(() => {
     $('.testPic').hide();
-    $('.loading').fadeIn(400);
+    //$('.loading').fadeIn(400);
+    $('.imgResults').html('');
     child3 = spawn(shellType, [shellFlag, rmType]);
 
     child3.stdout.on('data', (data) => {
