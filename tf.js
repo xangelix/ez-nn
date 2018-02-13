@@ -235,7 +235,7 @@ $(() => {
 
   $('#createNeuralNetwork').click(() => {
     if (imgDir) {
-      $('#createNeuralNetwork').hide();
+      $('.createNeuralNetwork').hide();
       $('.stopTensorBoard').hide();
       $('.loading').fadeIn(1500);
 
