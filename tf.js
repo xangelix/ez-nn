@@ -248,7 +248,33 @@ $(() => {
               }
             });
             */
-            $('.imgResults').html(resultsHTML.format(data1, results[0][0], percentMe(results[0][1]), results[1][0], percentMe(results[1][1]), results[2][0], percentMe(results[2][1]), results[3][0], percentMe(results[3][1]), results[4][0], percentMe(results[4][1])));
+            console.log(results);
+            console.log(results.length);
+            let categories = results.length;
+
+            if (categories === 1) {
+              resultsHTMLF = resultsHTML + cat1 + resultsSuffixHTML;
+              console.log(resultsHTMLF);
+              $('.imgResults').html(resultsHTMLF.format(data1, results[0][0], percentMe(results[0][1])));
+            } else if (categories === 2) {
+              resultsHTMLF = resultsHTML + cat1 + cat2 + resultsSuffixHTML;
+              console.log(resultsHTMLF);
+              $('.imgResults').html(resultsHTMLF.format(data1, results[0][0], percentMe(results[0][1]), results[1][0], percentMe(results[1][1])));
+            } else if (categories === 3) {
+              resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + resultsSuffixHTML;
+              console.log(resultsHTMLF);
+              $('.imgResults').html(resultsHTMLF.format(data1, results[0][0], percentMe(results[0][1]), results[1][0], percentMe(results[1][1]), results[2][0], percentMe(results[2][1])));
+            } else if (categories === 4) {
+              resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 + resultsSuffixHTML;
+              console.log(resultsHTMLF);
+              $('.imgResults').html(resultsHTMLF.format(data1, results[0][0], percentMe(results[0][1]), results[1][0], percentMe(results[1][1]), results[2][0], percentMe(results[2][1]), results[3][0], percentMe(results[3][1])));
+            } else if (categories === 5 || categories > 5) {
+              resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 + cat5 + resultsSuffixHTML;
+              console.log(resultsHTMLF);
+              $('.imgResults').html(resultsHTMLF.format(data1, results[0][0], percentMe(results[0][1]), results[1][0], percentMe(results[1][1]), results[2][0], percentMe(results[2][1]), results[3][0], percentMe(results[3][1]), results[4][0], percentMe(results[4][1])));
+            } else {
+              console.log('invalid range of categories');
+            }
           }
         });
 
