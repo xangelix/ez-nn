@@ -270,6 +270,7 @@ $(() => {
       });
     } else {
       console.log('need more params');
+      dialog.showErrorBox('Invalid Parameters!', 'Please make sure all settings fields are filled!');
     }
 
   });
