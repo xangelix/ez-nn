@@ -8,8 +8,11 @@ const isWin = process.platform === "win32",
       shellType = isWin ? 'cmd' : 'bash',
       shellFlag = isWin ? '/c' : '-c',
       shellSource = isWin ? 'activate tensorflow' : 'source ~/tensorflow/bin/activate',
-      rmType = isWin ? 'rd /s /q "tf/tf_files/" && mkdir tf/tf_files' : 'rm -rf tf/tf_files/*',
       createNNPrefix = 'cd tf/ && python -m scripts.label_image',
+      stepsFlag = ' --how_many_training_steps=',
+      modelDir = ' --model_dir=',
+      summariesDir = '/models/ --summaries_dir=',
+      bottleneckDirFlag = 'python -m scripts.retrain --bottleneck_dir=',
       tfCD = 'cd tf/ && ';
 
 // Node.js requires and configurations
@@ -23,14 +26,18 @@ const ipcRenderer = require('electron').ipcRenderer,
 
 format.extend(String.prototype);
 
-let tBLogDir = 'tf_files/training_summaries';
-let fRetrainedGraphPB = 'tf/tf_files/retrained_graph.pb';
-let retrainedGraphPB = 'tf_files/retrained_graph.pb';
+let tfFilesDirectory;
+let tBLogDir = '{0}/training_summaries'.format(tfFilesDirectory);
+let fRetrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
+let retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
 let imgDir;
 let tBstarted = false;
 let imageSize = '224';
 let architecture = '0.50';
 let steps = '500';
+let resultsHTMLF;
+
+let rmType = isWin ? 'dir"' : 'rm -rf {0}/*'.format(tfFilesDirectory);
 
 // Global child processes
 let child;
@@ -137,7 +144,12 @@ $(() => {
   });
 
   $('.photosDirectory').change(() => {
-    imgDir = $('.photosDirectory').val();
+    imgDir = '"' + $('.photosDirectory').val() + '"';
+  });
+
+  $('.tfFilesDirectory').change(() => {
+    tfFilesDirectory = '"' + $('.tfFilesDirectory').val() + '"';
+    retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
   });
 
   $('#settings').click(() => {
@@ -148,9 +160,21 @@ $(() => {
     dialog.showOpenDialog({ properties: ['openDirectory'] }, (data) => {
       if (data) {
         console.log(data[0]);
-        $('.labeling').addClass('active');
+        $('.label1').addClass('active');
         $('.photosDirectory').val(data[0]);
         imgDir = data;
+      }
+    });
+  });
+
+  $('.browsetf').click(() => {
+    dialog.showOpenDialog({ properties: ['openDirectory'] }, (data) => {
+      if (data) {
+        console.log(data[0]);
+        $('.label2').addClass('active');
+        $('.tfFilesDirectory').val(data[0]);
+        tfFilesDirectory = data;
+        retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
       }
     });
   });
@@ -242,12 +266,12 @@ $(() => {
   });
 
   $('#createNeuralNetwork').click(() => {
-    if (imgDir) {
+    if (imgDir && tfFilesDirectory && !(imgDir[0].trim() === '') && !(tfFilesDirectory[0].trim() === '') ) {
       $('.createNeuralNetwork').hide();
       $('.stopTensorBoard').hide();
       $('.loading').fadeIn(1500);
-
-      child2 = spawn(shellType, [shellFlag, 'cd tf/ && python -m scripts.retrain --bottleneck_dir=tf_files/bottlenecks --how_many_training_steps=' + steps + ' --model_dir=tf_files/models/ --summaries_dir=tf_files/training_summaries/mobilenet_' + architecture + '_' + imageSize + ' --output_graph=tf_files/retrained_graph.pb --output_labels=tf_files/retrained_labels.txt --architecture=mobilenet_' + architecture + '_' + imageSize + ' --image_dir=' + imgDir]);
+      //.format(tfFilesDirectory)
+      child2 = spawn(shellType, [shellFlag, tfCD + bottleneckDirFlag + tfFilesDirectory + '/bottlenecks' + stepsFlag + steps + modelDir + tfFilesDirectory + summariesDir + tfFilesDirectory + '/training_summaries/mobilenet_' + architecture + '_' + imageSize + ' --output_graph=' + tfFilesDirectory + '/retrained_graph.pb --output_labels='+ tfFilesDirectory + '/retrained_labels.txt --architecture=mobilenet_' + architecture + '_' + imageSize + ' --image_dir=' + imgDir]);
 
       child2.stdout.on('data', function (data) {
         console.log('stdout: ' + data.toString());
@@ -275,7 +299,7 @@ $(() => {
 
   });
 
-  const resultsHTML = `
+  let resultsHTML = `
   <br /><br /><br /><br /><br /><br /><br />
     <section class="container">
       <div class="left-half">
@@ -295,7 +319,8 @@ $(() => {
               <td>
                 Confidence:
               </td>
-            </tr>
+            </tr>`;
+    const cat1 = `
             <tr>
               <td>
                 {1}
@@ -303,7 +328,8 @@ $(() => {
               <td>
                 {2}
               </td>
-            </tr>
+            </tr>`;
+    const cat2 = `
             <tr>
               <td>
                 {3}
@@ -311,7 +337,8 @@ $(() => {
               <td>
                 {4}
               </td>
-            </tr>
+            </tr>`;
+    const cat3 = `
             <tr>
               <td>
                 {5}
@@ -319,7 +346,8 @@ $(() => {
               <td>
                 {6}
               </td>
-            </tr>
+            </tr>`;
+    const cat4 = `
             <tr>
               <td>
                 {7}
@@ -327,7 +355,8 @@ $(() => {
               <td>
                 {8}
               </td>
-            </tr>
+            </tr>`;
+    const cat5 = `
             <tr>
               <td>
                 {9}
@@ -335,11 +364,12 @@ $(() => {
               <td>
                 {10}
               </td>
-            </tr>
-          </table>
-        </article>
-      </div>
+            </tr>`;
+
+    const resultsSuffixHTML = `
+        </table>
+      </article>
+    </div>
     </section>
-    <br /><br /><br /><br /><br /><br /><br /><br />
-    `;
+    <br /><br /><br /><br /><br /><br /><br /><br />`;
 });
