@@ -72,17 +72,17 @@ $(() => {
   });
 
   // Hides options that can't be used yet
-  fs.stat(fRetrainedGraphPB, (err) => {
+  fs.stat(retrainedGraphPB, (err) => {
     if (err) {
       $('.testPic').hide();
-      $('.cleanup').hide();
+      //$('.cleanup').hide();
     }
   });
 
   $('.loading').hide();
   $('.options').hide();
   $('#log').hide();
-
+  $('.cleanup').hide();
 
   // About button on click
   $('#about').click(() => {
@@ -216,7 +216,7 @@ $(() => {
       console.log('child process exited with code ' + code.toString());
       //updateLog('child process exited with code ' + code.toString());
       $('.loading').hide();
-      $('.cleanup').hide();
+      //$('.cleanup').hide();
       if ($('.stopTensorBoard').is(":visible")) {
         $('.createNeuralNetwork').fadeIn(1500);
       }
