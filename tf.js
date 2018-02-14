@@ -28,8 +28,8 @@ format.extend(String.prototype);
 
 let tfFilesDirectory;
 let tBLogDir = '{0}/training_summaries'.format(tfFilesDirectory);
-let fRetrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
 let retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
+let labelsDir = '{0}/retrained_labels.txt'.format(tfFilesDirectory);
 let imgDir;
 let tBstarted = false;
 let imageSize = '224';
@@ -150,6 +150,7 @@ $(() => {
   $('.tfFilesDirectory').change(() => {
     tfFilesDirectory = '"' + $('.tfFilesDirectory').val() + '"';
     retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
+    labelsDir = '{0}/retrained_labels.txt'.format(tfFilesDirectory);
   });
 
   $('#settings').click(() => {
@@ -175,6 +176,7 @@ $(() => {
         $('.tfFilesDirectory').val(data[0]);
         tfFilesDirectory = data;
         retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
+        labelsDir = '{0}/retrained_labels.txt'.format(tfFilesDirectory);
       }
     });
   });
@@ -228,7 +230,7 @@ $(() => {
 
     dialog.showOpenDialog({ filters: [ { name: 'JPG Images', extensions: ['jpg'] } ] }, (data1) => {
 
-      child1 = spawn(shellType, [shellFlag, tfCD + `python -m scripts.label_image --graph=` + retrainedGraphPB + ` --image=` + data1]);
+      child1 = spawn(shellType, [shellFlag, tfCD + `python -m scripts.label_image --graph=` + retrainedGraphPB + ' --labels=' + labelsDir + ` --image=` + data1]);
         child1.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
           updateLog(data.toString());
