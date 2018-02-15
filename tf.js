@@ -82,7 +82,6 @@ $(() => {
   $('.loading').hide();
   $('.options').hide();
   $('#log').hide();
-  $('.cleanup').hide();
 
   // About button on click
   $('#about').click(() => {
@@ -123,9 +122,7 @@ $(() => {
           console.log('stderr: ' + data.toString());
           if (data.includes(`(Press CTRL+C to quit)`)) {
             $('.loading').hide();
-            if ($('.cleanup').is(":visible")) {
-              $('.testPic').fadeIn(1500);
-            } else {
+            if (!oldExists) {
               $('.createNeuralNetwork').fadeIn(1500);
             }
           }
@@ -196,34 +193,6 @@ $(() => {
       $('.startTensorBoard').fadeIn(1500);
     }
     });
-  });
-
-  $('#cleanup').click(() => {
-    $('.testPic').hide();
-    //$('.loading').fadeIn(400);
-    $('.imgResults').html('');
-    child3 = spawn(shellType, [shellFlag, rmType]);
-
-    child3.stdout.on('data', (data) => {
-      console.log('stdout: ' + data.toString());
-      //updateLog(data.toString());
-    });
-
-    child3.stderr.on('data', (data) => {
-      console.log('stderr: ' + data.toString());
-      //updateLog(data.toString());
-    });
-
-    child3.on('exit', (code) => {
-      console.log('child process exited with code ' + code.toString());
-      //updateLog('child process exited with code ' + code.toString());
-      $('.loading').hide();
-      //$('.cleanup').hide();
-      if ($('.stopTensorBoard').is(":visible")) {
-        $('.createNeuralNetwork').fadeIn(1500);
-      }
-    });
-
   });
 
   $('#testPic').click(() => {
@@ -318,7 +287,6 @@ $(() => {
         console.log('child process exited with code ' + code.toString());
         //updateLog('child process exited with code ' + code.toString());
         $('.loading').hide();
-        $('.cleanup').fadeIn(1500);
       });
     } else {
       console.log('need more params');
