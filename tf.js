@@ -199,12 +199,12 @@ $(() => {
 
     dialog.showOpenDialog({ filters: [ { name: 'JPG Images', extensions: ['jpg'] } ] }, (data1) => {
 
-      child1 = spawn(shellType, [shellFlag, tfCD + `python -m scripts.label_image --graph=` + retrainedGraphPB + ' --labels=' + labelsDir + ` --image=` + data1]);
+      child1 = spawn(shellType, [shellFlag, ('{0}python -m scripts.label_image --graph={1}/retrained_graph.pb --labels={1}/retrained_labels.txt --image={2}').format(tfCD, tfFilesDirectory, data1)]);
         child1.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
           updateLog(data.toString());
           if (data.includes(`Evaluation time (1-image):`)) {
-            let results = data.toString().substring(data.indexOf("s") + 1, data.length).trim().split('\n');
+            let results = data.toString().substring(data.indexOf('s') + 1, data.length).trim().split('\n');
             results = results.map((val) => {
               return val.split(' ');
             });
@@ -268,7 +268,8 @@ $(() => {
       $('.stopTensorBoard').hide();
       $('.loading').fadeIn(1500);
       //.format(tfFilesDirectory)
-      child2 = spawn(shellType, [shellFlag, tfCD + bottleneckDirFlag + tfFilesDirectory + '/bottlenecks' + stepsFlag + steps + modelDir + tfFilesDirectory + summariesDir + tfFilesDirectory + '/training_summaries/mobilenet_' + architecture + '_' + imageSize + ' --output_graph=' + tfFilesDirectory + '/retrained_graph.pb --output_labels='+ tfFilesDirectory + '/retrained_labels.txt --architecture=mobilenet_' + architecture + '_' + imageSize + ' --image_dir=' + imgDir]);
+      child2 = spawn(shellType, [shellFlag, '{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}{7}/training_summaries/mobilenet_{7}_{8} --output_graph={2}/retrained_graph.pb --output_labels={2}/retrained_labels.txt --architecture=mobilenet_{7}_{8} --image_dir={9}'.format(tfCD, bottleneckDirFlag, tfFilesDirectory, stepsFlag, steps, modelDir, summariesDir, architecture, imageSize, imgDir)]);
+      //child2 = spawn(shellType, [shellFlag, tfCD + bottleneckDirFlag + tfFilesDirectory + '/bottlenecks' + stepsFlag + steps + modelDir + tfFilesDirectory + summariesDir + tfFilesDirectory + '/training_summaries/mobilenet_' + architecture + '_' + imageSize + ' --output_graph=' + tfFilesDirectory + '/retrained_graph.pb --output_labels='+ tfFilesDirectory + '/retrained_labels.txt --architecture=mobilenet_' + architecture + '_' + imageSize + ' --image_dir=' + imgDir]);
 
       child2.stdout.on('data', function (data) {
         console.log('stdout: ' + data.toString());
