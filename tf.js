@@ -4,7 +4,7 @@
 let debug = true;
 
 // OS dependent and command flag constants
-const isWin = process.platform === "win32",
+const isWin = process.platform === 'win32',
       shellType = isWin ? 'cmd' : 'bash',
       shellFlag = isWin ? '/c' : '-c',
       shellSource = isWin ? 'activate tensorflow' : 'source ~/tensorflow/bin/activate',
@@ -37,7 +37,7 @@ let architecture = '0.50';
 let steps = '500';
 let resultsHTMLF;
 
-let rmType = isWin ? 'dir"' : 'rm -rf {0}/*'.format(tfFilesDirectory);
+let rmType = isWin ? 'dir' : 'rm -rf {0}/*'.format(tfFilesDirectory);
 
 // Global child processes
 let child;
@@ -46,7 +46,7 @@ let child2;
 
 // Updates log with parameter and scrolls to the bottom
 function updateLog(data) {
-  document.getElementById("log").innerHTML += '>{}<br /><br />'.format(data);
+  document.getElementById('log').innerHTML += '>{}<br /><br />'.format(data);
   console.log(data);
   $('#log').scrollTop($('#log')[0].scrollHeight);
 }
@@ -68,7 +68,7 @@ $(() => {
     }
 
     // Fade-in to avoid user seeing options before DOM load
-    $("body").fadeIn(2000);
+    $('body').fadeIn(2000);
   });
 
   // Hides options that can't be used yet
@@ -141,13 +141,13 @@ $(() => {
   });
 
   $('.photosDirectory').change(() => {
-    imgDir = '"' + $('.photosDirectory').val() + '"';
+    imgDir = $('.photosDirectory').val();
   });
 
   $('.tfFilesDirectory').change(() => {
-    tfFilesDirectory = '"' + $('.tfFilesDirectory').val() + '"';
     retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
     labelsDir = '{0}/retrained_labels.txt'.format(tfFilesDirectory);
+    tfFilesDirectory = $('.tfFilesDirectory').val();
   });
 
   $('#settings').click(() => {
