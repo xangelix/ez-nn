@@ -36,6 +36,7 @@ let imageSize = '224';
 let architecture = '0.50';
 let steps = '500';
 let resultsHTMLF;
+let oldExists = false;
 
 let rmType = isWin ? 'dir' : 'rm -rf {0}/*'.format(tfFilesDirectory);
 
@@ -57,6 +58,25 @@ function percentMe(num) {
   return (Math.round(Number(num) * 10000) / 100) + '%';
 }
 
+function loadOld() {
+  console.log('testing...');
+  console.log('{0}/retrained_graph.pb'.format(tfFilesDirectory));
+  fs.stat('{0}/retrained_graph.pb'.format(tfFilesDirectory), (err) => {
+    if (!err && tBstarted) {
+      oldExists = true;
+      $('.testPic').fadeIn(1500);
+      $('.createNeuralNetwork').hide();
+    } else {
+      oldExists = false;
+      $('.testPic').hide();
+    }
+    if (!oldExists && tBstarted && $('.photosDirectory').val().trim()) {
+      $('.createNeuralNetwork').fadeIn(1500);
+      $('.imgResults').html('');
+    }
+  });
+}
+
 // jQuery on DOM load
 $(() => {
 
@@ -72,13 +92,6 @@ $(() => {
   });
 
   // Hides options that can't be used yet
-  fs.stat(retrainedGraphPB, (err) => {
-    if (err) {
-      $('.testPic').hide();
-      //$('.cleanup').hide();
-    }
-  });
-
   $('.loading').hide();
   $('.options').hide();
   $('#log').hide();
@@ -121,9 +134,11 @@ $(() => {
         child.stderr.on('data', function (data) {
           console.log('stderr: ' + data.toString());
           if (data.includes(`(Press CTRL+C to quit)`)) {
+            loadOld();
             $('.loading').hide();
             if (!oldExists) {
               $('.createNeuralNetwork').fadeIn(1500);
+              $('.imgResults').html('');
             }
           }
           updateLog(data.toString());
@@ -142,12 +157,15 @@ $(() => {
 
   $('.photosDirectory').change(() => {
     imgDir = $('.photosDirectory').val();
+    if (!oldExists && tBstarted) {
+      $('.createNeuralNetwork').fadeIn(1500);
+      $('.imgResults').html(''); 
+    }
   });
 
   $('.tfFilesDirectory').change(() => {
-    retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
-    labelsDir = '{0}/retrained_labels.txt'.format(tfFilesDirectory);
     tfFilesDirectory = $('.tfFilesDirectory').val();
+    loadOld();
   });
 
   $('#settings').click(() => {
@@ -172,8 +190,7 @@ $(() => {
         $('.label2').addClass('active');
         $('.tfFilesDirectory').val(data[0]);
         tfFilesDirectory = data;
-        retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
-        labelsDir = '{0}/retrained_labels.txt'.format(tfFilesDirectory);
+        loadOld();
       }
     });
   });
