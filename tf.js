@@ -27,9 +27,6 @@ const ipcRenderer = require('electron').ipcRenderer,
 format.extend(String.prototype);
 
 let tfFilesDirectory;
-let tBLogDir = '{0}/training_summaries'.format(tfFilesDirectory);
-let retrainedGraphPB = '{0}/retrained_graph.pb'.format(tfFilesDirectory);
-let labelsDir = '{0}/retrained_labels.txt'.format(tfFilesDirectory);
 let imgDir;
 let tBstarted = false;
 let imageSize = '224';
