@@ -119,12 +119,12 @@ $(() => {
     tBstarted = true;
 
     // Available options updated
-    if (tBLogDir) {
+    if ('{0}/training_summaries'.format(tfFilesDirectory)) {
       $('.startTensorBoard').hide();
       $('.loading').fadeIn(400);
       child = spawn(
-        shellType, [shellFlag, '{0}{1} && tensorboard --logdir {2}'.format(
-          tfCD, shellSource, tBLogDir)]);
+        shellType, [shellFlag, '{0}{1} && tensorboard --logdir {2}/training_summaries'.format(
+          tfCD, shellSource, tfFilesDirectory)]);
 
         child.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
