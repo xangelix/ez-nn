@@ -77,6 +77,8 @@ function loadOld() {
 // jQuery on DOM load
 $(() => {
 
+    loadOld();
+
   request('http://localhost:6006/', (err, res, body) => {
     if (!body) {
       $('.stopTensorBoard').hide();
@@ -157,7 +159,7 @@ $(() => {
     imgDir = $('.photosDirectory').val();
     if (!oldExists && tBstarted) {
       $('.createNeuralNetwork').fadeIn(1500);
-      $('.imgResults').html(''); 
+      $('.imgResults').html('');
     }
   });
 
