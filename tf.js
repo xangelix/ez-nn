@@ -145,6 +145,7 @@ $(() => {
         child.on('exit', function (code) {
           console.log('child process exited with code ');
           $('.loading').hide();
+          tBstarted = false;
           $('.startTensorBoard').fadeIn(1500);
         });
     } else {
