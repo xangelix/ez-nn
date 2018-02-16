@@ -16,6 +16,7 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 * Corrected license file
 * Lots of commenting and documentation
 * Many more neural network options
+* Loading bar
 * Full users guide and documentation
 * Code shortening and increased efficiency
 * Cleanup confusing mix of classes and ids
