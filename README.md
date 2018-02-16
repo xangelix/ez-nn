@@ -34,9 +34,6 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 * [Node.js/npm](https://nodejs.org/en/) - for yarn and installation of dependencies
 * [yarn](https://yarnpkg.com/en/) - (Recommended) and/or [npm](https://nodejs.org/en/) for installation
 
-
-
-
 ## Installing and Deployment
 
 1. Clone the repository.
@@ -56,13 +53,12 @@ Happy forking!
 ## Built With
 
 * [Python ^3.6](https://www.python.org)
-* [TensorFlow 1.5.1](https://www.tensorflow.org)
 * [JavaScript ES6](https://www.javascript.com/)
 * [Node.js 9.5.0](https://www.npmjs.com/)
 * [Materialize 1.0 alpha](http://materializecss.com)
 
 ### Pip Packages
-* [TensorFlow](https://www.tensorflow.org/)
+* [TensorFlow 1.5.1](https://www.tensorflow.org)
 
 ### Node Modules
 
