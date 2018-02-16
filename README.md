@@ -1,4 +1,4 @@
-# ez-nn
+# ez-nn (Easy Neural Networks)
 
 An easy graphical user interface for creating image based convolutional neural networks using the TensorFlow library.
 
