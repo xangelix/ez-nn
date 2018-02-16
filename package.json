@@ -1,7 +1,7 @@
 {
   "name": "ez-nn",
-  "version": "0.0.1",
-  "description": "An easy nn.",
+  "version": "0.1.0",
+  "description": "An easy graphical user interface for creating image based convolutional neural networks using the TensorFlow library.",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
