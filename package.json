@@ -11,8 +11,8 @@
     "Electron",
     "ez-nn"
   ],
-  "author": "Cody",
-  "license": "AGPL-3.0-only",
+  "author": "Cody Neiman aka https://github.com/Matrix-Guy/",
+  "license": "GPL-3.0 ",
   "dependencies": {
     "electron": "^1.8.2",
     "jquery": "^3.3.1",
