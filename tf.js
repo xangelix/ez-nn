@@ -168,6 +168,10 @@ $(() => {
     loadOld();
   });
 
+  $('.steps').change(() => {
+    steps = $('.steps').val();
+  });
+
   $('#settings').click(() => {
     $('.options').slideToggle(70);
   });
@@ -284,6 +288,9 @@ $(() => {
       $('.createNeuralNetwork').hide();
       $('.stopTensorBoard').hide();
       $('.loading').fadeIn(1500);
+
+      steps = $('.steps').val();
+
       //.format(tfFilesDirectory)
       child2 = spawn(shellType, [shellFlag, '{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}{7}/training_summaries/mobilenet_{7}_{8} --output_graph={2}/retrained_graph.pb --output_labels={2}/retrained_labels.txt --architecture=mobilenet_{7}_{8} --image_dir={9}'.format(tfCD, bottleneckDirFlag, tfFilesDirectory, stepsFlag, steps, modelDir, summariesDir, architecture, imageSize, imgDir)]);
       //child2 = spawn(shellType, [shellFlag, tfCD + bottleneckDirFlag + tfFilesDirectory + '/bottlenecks' + stepsFlag + steps + modelDir + tfFilesDirectory + summariesDir + tfFilesDirectory + '/training_summaries/mobilenet_' + architecture + '_' + imageSize + ' --output_graph=' + tfFilesDirectory + '/retrained_graph.pb --output_labels='+ tfFilesDirectory + '/retrained_labels.txt --architecture=mobilenet_' + architecture + '_' + imageSize + ' --image_dir=' + imgDir]);

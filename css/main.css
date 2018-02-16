@@ -111,12 +111,12 @@ hr {
   border: none;
   color: #333;
   height: 5px;
-  transform: translate(-10%, +520%);
+  transform: translate(-10%, +470%);
   width: 125%;
 }
 
 .hrClose {
-  transform: translate(-10%, +1390%);
+  transform: translate(-10%, +1050%);
 }
 
 * {
@@ -176,4 +176,14 @@ table {
 table.resultsTable td, table.resultsTable th {
   border: 1px solid #616161;
   padding: 5px 4px;
+}
+
+.labeling3 {
+  left: -12% !important;
+  top: +40% !important;
+}
+
+.steps {
+  transform: translate(-10%, +110%);
+  width: 125% !important;
 }
