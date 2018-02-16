@@ -58,7 +58,10 @@ Happy forking!
 ## Built With
 
 * [JavaScript](https://www.javascript.com/)
+* [jQuery](http://jquery.com)
+* [TensorFlow](https://www.tensorflow.org)
 * [Node.js](https://www.npmjs.com/)
+* [Materialize](http://materializecss.com)
 
 ### Node Modules
 
