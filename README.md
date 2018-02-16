@@ -13,7 +13,6 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 * Actual applicability of this application is likely limited, this is just meant for a fun demonstration of TensorFlow.
 
 ## Upcoming Features (higher importance closer to the top)
-* Corrected license file
 * Lots of commenting and documentation
 * Many more neural network options
 * Loading bar
