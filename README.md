@@ -29,26 +29,23 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 
 ## Prerequisites
 
-* [yarn](https://yarnpkg.com/en/) (Recommended) or [npm](https://nodejs.org/en/) for installation
+* [Python ^3.6](https://www.python.org/) - or use [Anaconda](https://www.anaconda.com) if on windows
+* [TensorFlow](https://www.tensorflow.org/) - **TensorFlow must be installed in a separate environment called ```tensorflow```**
+* [Node.js/npm](https://nodejs.org/en/) - for yarn and installation of dependencies
+* [yarn](https://yarnpkg.com/en/) - (Recommended) and/or [npm](https://nodejs.org/en/) for installation
 
-* [Python ^3.6](https://www.python.org/)
+
+
 
 ## Installing and Deployment
 
-### Yarn (Recommended)
 1. Clone the repository.
-2. Install [yarn](https://yarnpkg.com/en/)
-3. In the directory of the repository execute the command: ```yarn install```
-4. Then ```yarn start```
-5. Done!
-
-or
-
-### Node Package Manager (npm)
-1. Clone the repository.
-2. Install [node.js/npm](https://nodejs.org/en/)
-3. In the directory of the repository execute the command: ```npm install```
-4. Then ```npm start```
+2. Install [Python ^3.6](https://www.python.org/) or use [Anaconda](https://www.anaconda.com) if on windows
+3. Install [TensorFlow](https://www.tensorflow.org/install). **TensorFlow must be installed in a separate environment called ```tensorflow```. Also make sure to follow all the directions very carefully and install in the way Google recommends.**
+4. Install [node.js/npm](https://nodejs.org/en/)
+5. Install [yarn](https://yarnpkg.com/en/) (Optional but recommended)
+3. In the directory of the repository execute the command: ```yarn install``` or if you chose not to install yarn: ```npm install```.
+4. Then ```yarn start``` or ```npm start```.
 5. Done!
 6. If errors occur try installing under root and switching back to user before start. It is currently unknown why this is sometimes necessary.
 
@@ -58,11 +55,14 @@ Happy forking!
 
 ## Built With
 
-* [JavaScript](https://www.javascript.com/)
-* [jQuery](http://jquery.com)
-* [TensorFlow](https://www.tensorflow.org)
-* [Node.js](https://www.npmjs.com/)
-* [Materialize](http://materializecss.com)
+* [Python ^3.6](https://www.python.org)
+* [TensorFlow 1.5.1](https://www.tensorflow.org)
+* [JavaScript ES6](https://www.javascript.com/)
+* [Node.js 9.5.0](https://www.npmjs.com/)
+* [Materialize 1.0 alpha](http://materializecss.com)
+
+### Pip Packages
+* [TensorFlow](https://www.tensorflow.org/)
 
 ### Node Modules
 
