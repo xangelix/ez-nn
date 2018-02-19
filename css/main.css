@@ -28,7 +28,8 @@ h1, h4, h5 {
 #loading {
   display: block;
   margin: 0 auto;
-  white-space: pre-wrap
+  white-space: pre-wrap;
+  transform: translate(+0%, +22%);
 }
 
 .btn-large:hover:before {
@@ -186,4 +187,18 @@ table.resultsTable td, table.resultsTable th {
 .steps {
   transform: translate(-10%, +110%);
   width: 125% !important;
+}
+
+.progressbar {
+  width: 50%;
+  transform: translate(+50%, +0%);
+}
+
+.ui-widget-header {
+  transform: translate(+0%, +4%);
+}
+
+span {
+  text-align: center;
+  color: #000;
 }

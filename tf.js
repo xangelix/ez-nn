@@ -23,19 +23,27 @@ const ipcRenderer = require('electron').ipcRenderer,
       _ = require('lodash'),
       format = require('string-format'),
       request = require('request'),
+      read = require('fs-readdir-recursive'),
       fs = require('fs');
 
 format.extend(String.prototype);
 
+// Neural network variables
 let tfFilesDirectory;
 let imgDir;
-let tBstarted = false;
 let imageSize = '224';
 let architecture = '0.50';
 let steps = '500';
-let resultsHTMLF;
-let oldExists = false;
 
+// Declare global status variables
+let tBstarted = false;
+let oldExists = false;
+let downloadingMobileNet = false;
+let creatingNN = false;
+let training = false;
+
+let resultsHTMLF;
+let loadingIndex = 0;
 
 // Global child processes
 let child;
@@ -49,13 +57,26 @@ function updateLog(data) {
   $('#log').scrollTop($('#log')[0].scrollHeight);
 }
 
+function maxProgressBar(base) {
+  $('.progressbar').progressbar({
+    max: base
+  });
+}
+
+function updateProgressBar(percent) {
+  $('.progressbar').progressbar({
+    value: percent
+  });
+}
 
 // Formats confidence to percentage
 function percentMe(num) {
   return (Math.round(Number(num) * 100000000) / 1000000) + '%';
 }
 
+// Options change based on the existance of old neural network data
 function loadOld() {
+  if (!tBstarted) { $('.startTensorBoard').fadeIn(1500); }
   console.log('testing...');
   console.log('{0}/retrained_graph.pb'.format(tfFilesDirectory));
   fs.stat('{0}/retrained_graph.pb'.format(tfFilesDirectory), (err) => {
@@ -77,7 +98,10 @@ function loadOld() {
 // jQuery on DOM load
 $(() => {
 
-    loadOld();
+  loadOld();
+
+  updateProgressBar(loadingIndex);
+  maxProgressBar(100);
 
   request('http://localhost:6006/', (err, res, body) => {
     if (!body) {
@@ -94,6 +118,8 @@ $(() => {
   $('.loading').hide();
   $('.options').hide();
   $('#log').hide();
+  $('.progressbar').hide();
+  $('#progressbar').hide();
 
   // About button on click
   $('#about').click(() => {
@@ -103,44 +129,55 @@ $(() => {
   // Start TensorBoard button on click
   $('#startTensorBoard').click(() => {
 
-    tBstarted = true;
-
-    // Available options updated
-    if ('{0}/training_summaries'.format(tfFilesDirectory)) {
-      $('.startTensorBoard').hide();
-      $('.loading').fadeIn(400);
-      child = spawn(
-        shellType, [shellFlag,
-          '{0}{1} && tensorboard --logdir {2}/training_summaries'.format(
-            tfCD, shellSource, tfFilesDirectory)]);
-
-        child.stdout.on('data', function (data) {
-          console.log('stdout: ' + data.toString());
-          updateLog(data.toString());
-        });
-
-        child.stderr.on('data', function (data) {
-          console.log('stderr: ' + data.toString());
-          if (data.includes(`(Press CTRL+C to quit)`)) {
-            loadOld();
-            $('.loading').hide();
-            if (!oldExists) {
-              $('.createNeuralNetwork').fadeIn(1500);
-              $('.imgResults').html('');
-            }
-          }
-          updateLog(data.toString());
-          $('.stopTensorBoard').fadeIn(1500);
-        });
-
-        child.on('exit', function (code) {
-          console.log('child process exited with code ');
-          $('.loading').hide();
-          tBstarted = false;
-          $('.startTensorBoard').fadeIn(1500);
-        });
-    } else {
+    if (!tfFilesDirectory) {
       console.log('need more params');
+      dialog.showErrorBox('Invalid Parameters!',
+        'Please make sure all settings fields are filled!');
+    } else {
+      // Update running status boolean
+      tBstarted = true;
+
+      // Available options updated
+      console.log('atme: ' + tfFilesDirectory);
+      if ('{0}/training_summaries'.format(tfFilesDirectory)) {
+        $('.startTensorBoard').hide();
+        $('.loading').fadeIn(400);
+        child = spawn(
+          shellType, [shellFlag,
+            '{0} && tensorboard --logdir {1}/training_summaries &'.format(
+              shellSource, tfFilesDirectory)]);
+
+          console.log('me again: ' + '{0} && tensorboard --logdir {1}/training_summaries &'.format(
+            shellSource, tfFilesDirectory));
+
+          child.stdout.on('data', function (data) {
+            console.log('stdout: ' + data.toString());
+            updateLog(data.toString());
+          });
+
+          child.stderr.on('data', function (data) {
+            console.log('stderr: ' + data.toString());
+            if (data.includes(`(Press CTRL+C to quit)`)) {
+              loadOld();
+              $('.loading').hide();
+              if (!oldExists) {
+                $('.createNeuralNetwork').fadeIn(1500);
+                $('.imgResults').html('');
+              }
+            }
+            updateLog(data.toString());
+            $('.stopTensorBoard').fadeIn(1500);
+          });
+
+          child.on('exit', function (code) {
+            console.log('child process exited with code ');
+            $('.loading').hide();
+            tBstarted = false;
+            $('.startTensorBoard').fadeIn(1500);
+          });
+      } else {
+        console.log('need more params');
+      }
     }
   });
 
@@ -295,6 +332,11 @@ $(() => {
 
         steps = $('.steps').val();
 
+        var totalImages = read(imgDir[0]);
+
+        console.log('dir: ' + imgDir[0]);
+        console.log('amount of files: ' + totalImages.length);
+
         //.format(tfFilesDirectory)
         child2 = spawn(shellType, [shellFlag,
           '{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}{7}\
@@ -308,13 +350,63 @@ $(() => {
         child2.stdout.on('data', function (data) {
           console.log('stdout: ' + data.toString());
           if (data.includes(`variables to const ops.`)) {
+            training = false;
+            loadingIndex = 0;
+            updateProgressBar(loadingIndex);
             $('.testPic').fadeIn(1500);
+            $('.stopTensorBoard').fadeIn(1500);
+          } else if (data.toString().includes('Downloading mobilenet')) {
+            if (!downloadingMobileNet) {
+              maxProgressBar(100);
+              downloadingMobileNet = true;
+              $('.progressbar').fadeIn(200);
+                $('#progressbar').fadeIn(200);
+              $('.actionDescription').html(loadDownloading);
+            }
+            let loadingStat = data.toString().substring(data.indexOf('%') - 4,
+              data.indexOf('%')).trim();
+            console.log(loadingStat);
+            updateProgressBar(Number(loadingStat));
+            $('#progressbar').html('{0}/{1}'.format(
+              Number(loadingStat), 100));
+            //updateLog(data.toString());
           }
-          //updateLog(data.toString());
         });
 
         child2.stderr.on('data', function (data) {
           console.log('stderr: ' + data.toString());
+          if (data.toString().includes('Creating bottleneck')) {
+            if (!creatingNN) {
+              maxProgressBar(totalImages.length);
+              creatingNN = true;
+              $('.actionDescription').html(loadCreateNeuralNetwork);
+            }
+            loadingIndex++;
+            updateProgressBar(loadingIndex);
+            $('#progressbar').html('{0}/{1}'.format(
+              Number(loadingIndex), totalImages.length));
+          } else if (data.toString().includes('Successfully downloaded')) {
+            downloadingMobileNet = false;
+            loadingIndex = 0;
+            updateProgressBar(loadingIndex);
+          } else if (data.toString().includes('Step ')) {
+            if (!training) {
+              maxProgressBar(steps);
+              training = true;
+              $('.actionDescription').html(loadTraining);
+            }
+            let stepStat = data.toString().substring(
+              data.lastIndexOf(':') - steps.length,
+              data.lastIndexOf(':')).trim();
+            console.log(stepStat);
+            updateProgressBar(Number(stepStat.replace(/\D/g, '')));
+            $('#progressbar').html('{0}/{1}'.format(
+              Number(stepStat.replace(/\D/g, '')), steps));
+          } else if (data.toString().includes('tensorflow.python.ops.nn_op')) {
+            creatingNN = false;
+            loadingIndex = 0;
+            updateProgressBar(loadingIndex);
+          }
           //updateLog(data.toString());
         });
 
@@ -322,6 +414,9 @@ $(() => {
           console.log('child process exited with code ' + code.toString());
           //updateLog('child process exited with code ' + code.toString());
           $('.loading').hide();
+          $('.progressbar').hide();
+          $('#progressbar').hide();
+          $('.actionDescription').html(``);
         });
       } else {
         console.log('need more params');
@@ -332,8 +427,23 @@ $(() => {
   });
 });
 
+
+// Action description html
+const loadDownloading = `
+<br />
+<h5>Downloading required assets...</h5>
+`;
+const loadCreateNeuralNetwork = `
+<br />
+<h5>Creating neural network...</h5>
+`;
+const loadTraining = `
+<br />
+<h5>Training neural network...</h5>
+`;
+
 // Results HTML
-let resultsHTML = `
+const resultsHTML = `
 <br /><br /><br /><br /><br /><br /><br />
   <section class="container">
     <div class="left-half">

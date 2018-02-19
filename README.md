@@ -15,7 +15,6 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 ## Upcoming Features (higher importance closer to the top)
 * Lots of commenting and documentation
 * Many more neural network options
-* Loading bar
 * Full users guide and documentation
 * Code shortening and increased efficiency
 * Cleanup confusing mix of classes and ids
