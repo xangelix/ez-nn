@@ -104,7 +104,10 @@ $(() => {
   updateProgressBar(loadingIndex);
   maxProgressBar(100);
 
+  // Test if TensorBoard is already running
   request('http://localhost:6006/', (err, res, body) => {
+
+    // Hides buttons if TensorBoard is not running
     if (!body) {
       $('.stopTensorBoard').hide();
       $('.testPic').hide();
@@ -123,7 +126,7 @@ $(() => {
   $('#progressbar').hide();
   $('.startTensorBoard').hide();
 
-  // About button on click
+  // Log slide toggle on click
   $('#about').click(() => {
     $('#log').slideToggle();
   });
@@ -246,6 +249,7 @@ $(() => {
 
   $('#testPic').click(() => {
 
+    // Opens browse dialog for jpg images only
     dialog.showOpenDialog({ filters: [ { name: 'JPG Images',
       extensions: ['jpg'] } ] }, (data1) => {
 
