@@ -52,7 +52,7 @@ function updateLog(data) {
 
 // Formats confidence to percentage
 function percentMe(num) {
-  return (Math.round(Number(num) * 10000) / 100) + '%';
+  return (Math.round(Number(num) * 100000000) / 1000000) + '%';
 }
 
 function loadOld() {
