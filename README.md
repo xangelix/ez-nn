@@ -32,17 +32,18 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 * [Python ^3.6](https://www.python.org/) - or use [Anaconda](https://www.anaconda.com) if on windows
 * [TensorFlow](https://www.tensorflow.org/) - **TensorFlow must be installed in a separate environment called ```tensorflow```**
 * [Node.js/npm](https://nodejs.org/en/) - for yarn and installation of dependencies
-* [yarn](https://yarnpkg.com/en/) - (Recommended) and/or [npm](https://nodejs.org/en/) for installation
+* [yarn](https://yarnpkg.com/en/) for installation
+* [npm](https://nodejs.org/en/) for installation
 
 ## Installing and Deployment
 
 1. Clone the repository.
-2. Install [Python ^3.6](https://www.python.org/) or use [Anaconda](https://www.anaconda.com) if on windows
+2. Install [Python ^3.6](https://www.python.org/) or use [Anaconda](https://www.anaconda.com) if on windows, make sure you install to PATH environment variable.
 3. Install [TensorFlow](https://www.tensorflow.org/install). **TensorFlow must be installed in a separate environment called ```tensorflow```. Also make sure to follow all the directions very carefully and install in the way Google recommends.**
 4. Install [node.js/npm](https://nodejs.org/en/)
-5. Install [yarn](https://yarnpkg.com/en/) (Optional but recommended)
-3. In the directory of the repository execute the command: ```yarn install``` or if you chose not to install yarn: ```npm install```.
-4. Then ```yarn start``` or ```npm start```.
+5. Install [yarn](https://yarnpkg.com/en/)
+3. In the directory of the repository execute the command: ```yarn install```.
+4. Then ```yarn start```.
 5. Done!
 6. If errors occur try installing under root and switching back to user before start. It is currently unknown why this is sometimes necessary.
 
