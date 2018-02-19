@@ -16,6 +16,7 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 * Lots of commenting and documentation
 * Many more neural network options
 * Full users guide and documentation
+* More log data
 * Code shortening and increased efficiency
 * Cleanup confusing mix of classes and ids
 * Possible stopping of TensorBoard inside the application
