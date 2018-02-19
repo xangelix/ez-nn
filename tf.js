@@ -121,6 +121,7 @@ $(() => {
   $('#log').hide();
   $('.progressbar').hide();
   $('#progressbar').hide();
+  $('.startTensorBoard').hide();
 
   // About button on click
   $('#about').click(() => {
