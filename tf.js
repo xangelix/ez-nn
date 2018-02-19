@@ -36,7 +36,6 @@ let steps = '500';
 let resultsHTMLF;
 let oldExists = false;
 
-let rmType = isWin ? 'dir' : 'rm -rf {0}/*'.format(tfFilesDirectory);
 
 // Global child processes
 let child;
