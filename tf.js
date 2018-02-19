@@ -97,20 +97,8 @@ $(() => {
 
   // About button on click
   $('#about').click(() => {
-
     $('#log').slideToggle();
-
-    // Logs all package info
-    /*
-    if (debug) {
-      require('child_process').exec('npm ls --json', function(err, stdout, stderr) {
-        if (err) return console.log(err);
-        updateLog(JSON.stringify(stdout));
-      });
-    }
-    */
   });
-
 
   // Start TensorBoard button on click
   $('#startTensorBoard').click(() => {
