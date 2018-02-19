@@ -70,6 +70,7 @@ Happy forking!
 * [remote ^0.2.6](https://www.npmjs.com/package/remote)
 * [request ^2.83.0](https://www.npmjs.com/package/request)
 * [string-format ^0.5.0](https://www.npmjs.com/package/string-format)
+* [fs-readdir-recursive ^1.1.0](https://www.npmjs.com/package/fs-readdir-recursive)
 
 ## Contributing
 
