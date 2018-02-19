@@ -340,8 +340,7 @@ $(() => {
 
         //.format(tfFilesDirectory)
         child2 = spawn(shellType, [shellFlag,
-          '{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}{7}\
-          /training_summaries/mobilenet_{7}_{8} \
+          '{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}/training_summaries/mobilenet_{7}_{8} \
           --output_graph={2}/retrained_graph.pb \
           --output_labels={2}/retrained_labels.txt \
           --architecture=mobilenet_{7}_{8} --image_dir={9}'.format(tfCD,

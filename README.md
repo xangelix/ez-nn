@@ -21,7 +21,6 @@ Please use the [issues tracker on this GitHub repository](https://github.com/Mat
 * Possible stopping of TensorBoard inside the application
 
 ## Known Issues
-* Folder name configuration error
 * Start button showing at inappropriate times
 * TensorBoard does not interact properly on windows
 * Spaces in folder names or subfolder names cause problems with training and testing pictures
