@@ -224,16 +224,7 @@ $(() => {
                 return val.split(' ');
               });
               _.chunk(results, 2);
-              /*
-              results.sort((a, b) => {
-                if (a[1] === b[1]) {
-                  return 0;
-                }
-                else {
-                  return (a[1] < b[1]) ? -1 : 1;
-                }
-              });
-              */
+
               console.log(results);
               console.log(results.length);
               let categories = results.length;
