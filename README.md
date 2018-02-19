@@ -55,10 +55,11 @@ Happy forking!
 * [Python ^3.6](https://www.python.org)
 * [JavaScript ES6](https://www.javascript.com/)
 * [Node.js 9.5.0](https://www.npmjs.com/)
-* [Materialize 1.0 alpha](http://materializecss.com)
+* [Materialize 1.0 alpha](http://materializecss.com/)
+* [Custom jQuery-UI 1.12.1](http://jqueryui.com/)
 
 ### Pip Packages
-* [TensorFlow 1.5.1](https://www.tensorflow.org)
+* [TensorFlow 1.5.1](https://www.tensorflow.org/)
 
 ### Node Modules
 
