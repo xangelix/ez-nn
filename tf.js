@@ -53,6 +53,9 @@ let child2;
 
 // Updates log with parameter and scrolls to the bottom
 function updateLog(data) {
+  if ($('#log').text().length > 10000) {
+    $('#log').html($('#log').html().substring(1000, 10000));
+  }
   $('#log').append('>{}<br /><br />'.format(data));
   console.log(data);
   $('#log').scrollTop($('#log')[0].scrollHeight);
