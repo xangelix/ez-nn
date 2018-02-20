@@ -83,6 +83,9 @@ Any future collaborators will be added here.
 ## License
 
 This project is licensed under the GNU GENERAL PUBLIC LICENSE (Version 3, 29 June 2007) - see the [LICENSE](LICENSE) file for details.
+**DISCLAIMER:** This license only applies to material not linked above!
+To find the license of each tool/language/api/library ez-nn is created with,
+please view the links provided for each one as listed above.
 
 ## Acknowledgments
 
