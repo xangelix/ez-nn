@@ -59,7 +59,11 @@ function updateLog(data) {
     $('#log').html($('#log').html().substring(1000, 10000));
   }
   $('#log').append('>{}<br /><br />'.format(data));
-  console.log(data);
+
+  if (debug) {
+    console.log(data);
+  }
+
   // Automatically scrolls to the bottom
   $('#log').scrollTop($('#log')[0].scrollHeight);
 }
@@ -84,8 +88,9 @@ function percentMe(num) {
 // Options change based on the existance of old neural network data
 function loadOld() {
   if (!tBstarted) { $('.startTensorBoard').fadeIn(1500); }
-  console.log('testing...');
-  console.log('{0}/retrained_graph.pb'.format(tfFilesDirectory));
+
+  updateLog('testing...\n{0}/retrained_graph.pb'.format(tfFilesDirectory));
+
   fs.stat('{0}/retrained_graph.pb'.format(tfFilesDirectory), (err) => {
     if (!err && tBstarted) {
       oldExists = true;
@@ -141,7 +146,7 @@ $(() => {
   $('#startTensorBoard').click(() => {
 
     if (!tfFilesDirectory) {
-      console.log('need more params');
+      updateLog('need more parameters');
       dialog.showErrorBox('Invalid Parameters!',
         'Please make sure all settings fields are filled!');
     } else {
@@ -149,7 +154,7 @@ $(() => {
       tBstarted = true;
 
       // Available options updated
-      console.log('atme: ' + tfFilesDirectory);
+      updateLog('atme: ' + tfFilesDirectory);
       if ('{0}/training_summaries'.format(tfFilesDirectory)) {
         $('.startTensorBoard').hide();
         $('.loading').fadeIn(400);
@@ -158,16 +163,16 @@ $(() => {
             '{0} && tensorboard --logdir {1}/training_summaries &'.format(
               shellSource, tfFilesDirectory)]);
 
-          console.log('me again: ' + '{0} && tensorboard --logdir {1}/training_summaries &'.format(
+          updateLog('me again: ' +
+          '{0} && tensorboard --logdir {1}/training_summaries &'.format(
             shellSource, tfFilesDirectory));
-
           child.stdout.on('data', function (data) {
-            console.log('stdout: ' + data.toString());
+            updateLog('stdout: ' + data.toString());
             updateLog(data.toString());
           });
 
           child.stderr.on('data', function (data) {
-            console.log('stderr: ' + data.toString());
+            updateLog('stderr: ' + data.toString());
             if (data.includes(`(Press CTRL+C to quit)`)) {
               loadOld();
               $('.loading').hide();
@@ -181,13 +186,13 @@ $(() => {
           });
 
           child.on('exit', function (code) {
-            console.log('child process exited with code ');
+            updateLog('child process exited with code ');
             $('.loading').hide();
             tBstarted = false;
             $('.startTensorBoard').fadeIn(1500);
           });
       } else {
-        console.log('need more params');
+          updateLog('need more params');
       }
     }
   });
@@ -216,7 +221,7 @@ $(() => {
   $('.browse').click(() => {
     dialog.showOpenDialog({ properties: ['openDirectory'] }, (data) => {
       if (data) {
-        console.log(data[0]);
+        updateLog(data[0]);
         $('.label1').addClass('active');
         $('.photosDirectory').val(data[0]);
         imgDir = data;
@@ -227,7 +232,7 @@ $(() => {
   $('.browsetf').click(() => {
     dialog.showOpenDialog({ properties: ['openDirectory'] }, (data) => {
       if (data) {
-        console.log(data[0]);
+        updateLog(data[0]);
         $('.label2').addClass('active');
         $('.tfFilesDirectory').val(data[0]);
         tfFilesDirectory = data;
@@ -239,12 +244,12 @@ $(() => {
   $('#stopTensorBoard').click(() => {
     request('http://localhost:6006/', (err, res, body) => {
     if (body && !tBstarted) {
-      console.log('WARN: TensorBoard cannot be closed!');
+      updateLog('WARN: TensorBoard cannot be closed!');
     } else if (body && tBstarted) {
       $('.stopTensorBoard').hide();
       $('.createNeuralNetwork').hide();
       child.kill('SIGINT');
-      console.log('attempt');
+      updateLog('attempt');
     } else {
       $('.stopTensorBoard').hide();
       $('.createNeuralNetwork').hide();
@@ -264,7 +269,7 @@ $(() => {
           --labels={1}/retrained_labels.txt --image={2}').format(tfCD,
             tfFilesDirectory, data1)]);
           child1.stdout.on('data', function (data) {
-            console.log('stdout: ' + data.toString());
+            updateLog('stdout: ' + data.toString());
             updateLog(data.toString());
             if (data.includes(`Evaluation time (1-image):`)) {
               let results = data.toString().substring(data.indexOf('s') + 1,
@@ -274,61 +279,65 @@ $(() => {
               });
               _.chunk(results, 2);
 
-              console.log(results);
-              console.log(results.length);
+              updateLog(results);
+              updateLog(results.length);
+
               let categories = results.length;
 
               if (categories === 1) {
                 resultsHTMLF = resultsHTML + cat1 + resultsSuffixHTML;
-                console.log(resultsHTMLF);
+
+                updateLog(resultsHTMLF);
+
                 $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
                   percentMe(results[0][1])));
               } else if (categories === 2) {
-                resultsHTMLF = resultsHTML + cat1 + cat2 + resultsSuffixHTML;
-                console.log(resultsHTMLF);
-                $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                  percentMe(results[0][1]), results[1][0],
-                  percentMe(results[1][1])));
+                  resultsHTMLF = resultsHTML + cat1 + cat2 + resultsSuffixHTML;
+
+                  updateLog(resultsHTMLF);
+                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
+                    percentMe(results[0][1]), results[1][0],
+                    percentMe(results[1][1])));
               } else if (categories === 3) {
-                resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 +
-                  resultsSuffixHTML;
-                console.log(resultsHTMLF);
-                $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                  percentMe(results[0][1]), results[1][0],
-                  percentMe(results[1][1]), results[2][0],
-                  percentMe(results[2][1])));
+                  resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 +
+                    resultsSuffixHTML;
+                  updateLog(resultsHTMLF);
+                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
+                    percentMe(results[0][1]), results[1][0],
+                    percentMe(results[1][1]), results[2][0],
+                    percentMe(results[2][1])));
               } else if (categories === 4) {
-                resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 +
-                  resultsSuffixHTML;
-                console.log(resultsHTMLF);
-                $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                  percentMe(results[0][1]), results[1][0],
-                  percentMe(results[1][1]), results[2][0],
-                  percentMe(results[2][1]), results[3][0],
-                  percentMe(results[3][1])));
+                  resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 +
+                    resultsSuffixHTML;
+                  updateLog(resultsHTMLF);
+                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
+                    percentMe(results[0][1]), results[1][0],
+                    percentMe(results[1][1]), results[2][0],
+                    percentMe(results[2][1]), results[3][0],
+                    percentMe(results[3][1])));
               } else if (categories === 5 || categories > 5) {
-                resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 + cat5 +
-                  resultsSuffixHTML;
-                console.log(resultsHTMLF);
-                $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                  percentMe(results[0][1]), results[1][0],
-                  percentMe(results[1][1]), results[2][0],
-                  percentMe(results[2][1]), results[3][0],
-                  percentMe(results[3][1]), results[4][0],
-                  percentMe(results[4][1])));
+                  resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 + cat5 +
+                    resultsSuffixHTML;
+                  updateLog(resultsHTMLF);
+                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
+                    percentMe(results[0][1]), results[1][0],
+                    percentMe(results[1][1]), results[2][0],
+                    percentMe(results[2][1]), results[3][0],
+                    percentMe(results[3][1]), results[4][0],
+                    percentMe(results[4][1])));
               } else {
-                console.log('invalid range of categories');
+                  updateLog('invalid range of categories');
               }
             }
           });
 
           child1.stderr.on('data', function (data) {
-            console.log('stderr: ' + data.toString());
+            updateLog('stderr: ' + data.toString());
             updateLog(data.toString());
           });
 
           child1.on('exit', function (code) {
-            console.log('child process exited with code ' + code);
+            updateLog('child process exited with code ' + code);
             updateLog(code.toString());
           });
       });
@@ -346,8 +355,8 @@ $(() => {
 
         var totalImages = read(imgDir[0]);
 
-        console.log('dir: ' + imgDir[0]);
-        console.log('amount of files: ' + totalImages.length);
+        updateLog('dir: ' + imgDir[0]);
+        updateLog('amount of files: ' + totalImages.length);
 
         //.format(tfFilesDirectory)
         child2 = spawn(shellType, [shellFlag,
@@ -359,7 +368,7 @@ $(() => {
             summariesDir, architecture, imageSize, imgDir)]);
 
         child2.stdout.on('data', function (data) {
-          console.log('stdout: ' + data.toString());
+          updateLog('stdout: ' + data.toString());
           if (data.includes(`variables to const ops.`)) {
             training = false;
             loadingIndex = 0;
@@ -376,7 +385,7 @@ $(() => {
             }
             let loadingStat = data.toString().substring(data.indexOf('%') - 4,
               data.indexOf('%')).trim();
-            console.log(loadingStat);
+            updateLog(loadingStat);
             updateProgressBar(Number(loadingStat));
             $('#progressbar').html('{0}/{1}'.format(
               Number(loadingStat), 100));
@@ -385,7 +394,7 @@ $(() => {
         });
 
         child2.stderr.on('data', function (data) {
-          console.log('stderr: ' + data.toString());
+          updateLog('stderr: ' + data.toString());
           if (data.toString().includes('Creating bottleneck')) {
             if (!creatingNN) {
               maxProgressBar(totalImages.length);
@@ -409,7 +418,7 @@ $(() => {
             let stepStat = data.toString().substring(
               data.lastIndexOf(':') - steps.length,
               data.lastIndexOf(':')).trim();
-            console.log(stepStat);
+            updateLog(stepStat);
             updateProgressBar(Number(stepStat.replace(/\D/g, '')));
             $('#progressbar').html('{0}/{1}'.format(
               Number(stepStat.replace(/\D/g, '')), steps));
@@ -422,7 +431,7 @@ $(() => {
         });
 
         child2.on('exit', function (code) {
-          console.log('child process exited with code ' + code.toString());
+          updateLog('child process exited with code ' + code.toString());
           updateLog('child process exited with code ' + code.toString());
           $('.loading').hide();
           $('.progressbar').hide();
@@ -430,7 +439,7 @@ $(() => {
           $('.actionDescription').html(``);
         });
       } else {
-        console.log('need more params');
+        updateLog('need more params');
         dialog.showErrorBox('Invalid Parameters!',
           'Please make sure all settings fields are filled!');
       }
