@@ -377,7 +377,7 @@ $(() => {
             updateProgressBar(Number(loadingStat));
             $('#progressbar').html('{0}/{1}'.format(
               Number(loadingStat), 100));
-            //updateLog(data.toString());
+              updateLog(data.toString());
           }
         });
 
@@ -415,12 +415,12 @@ $(() => {
             loadingIndex = 0;
             updateProgressBar(loadingIndex);
           }
-          //updateLog(data.toString());
+          updateLog(data.toString());
         });
 
         child2.on('exit', function (code) {
           console.log('child process exited with code ' + code.toString());
-          //updateLog('child process exited with code ' + code.toString());
+          updateLog('child process exited with code ' + code.toString());
           $('.loading').hide();
           $('.progressbar').hide();
           $('#progressbar').hide();
