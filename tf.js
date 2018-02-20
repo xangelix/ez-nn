@@ -51,13 +51,16 @@ let child;
 let child1;
 let child2;
 
-// Updates log with parameter and scrolls to the bottom
+// Updates log with parameter
 function updateLog(data) {
+
+  // Removal of text after greater than 10000 characters
   if ($('#log').text().length > 10000) {
     $('#log').html($('#log').html().substring(1000, 10000));
   }
   $('#log').append('>{}<br /><br />'.format(data));
   console.log(data);
+  // Automatically scrolls to the bottom
   $('#log').scrollTop($('#log')[0].scrollHeight);
 }
 
