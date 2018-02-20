@@ -455,7 +455,7 @@ const loadDownloading = `
 `;
 const loadCreateNeuralNetwork = `
 <br />
-<h5>Creating neural network...</h5>
+<h5>Creating bottlenecks...</h5>
 `;
 const loadTraining = `
 <br />
