@@ -189,8 +189,18 @@ table.resultsTable td, table.resultsTable th {
   top: +69% !important;
 }
 
+.labeling5 {
+  left: -12% !important;
+  top: +98% !important;
+}
+
 .architectureVal {
   transform: translate(-10%, +190%);
+  width: 125% !important;
+}
+
+.imageSizeVal {
+  transform: translate(-10%, +278%);
   width: 125% !important;
 }
 

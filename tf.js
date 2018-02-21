@@ -218,6 +218,10 @@ $(() => {
     architecture = $('.architectureVal').val();
   });
 
+  $('.imageSizeVal').change(() => {
+    imageSize = $('.imageSizeVal').val();
+  });
+
   $('#settings').click(() => {
     $('.options').slideToggle(70);
   });
@@ -357,6 +361,7 @@ $(() => {
 
         steps = $('.steps').val();
         architecture = $('.architectureVal').val();
+        imageSize = $('.imageSizeVal').val();
 
         var totalImages = read(imgDir[0]);
 
