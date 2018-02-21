@@ -42,6 +42,7 @@ let oldExists = false;
 let downloadingMobileNet = false;
 let creatingNN = false;
 let training = false;
+let loader = false;
 
 let resultsHTMLF;
 let loadingIndex = 0;
@@ -100,7 +101,7 @@ function loadOld() {
       oldExists = false;
       $('.testPic').hide();
     }
-    if (!oldExists && tBstarted && $('.photosDirectory').val().trim()) {
+    if (!oldExists && tBstarted && !loader && $('.photosDirectory').val().trim()) {
       $('.createNeuralNetwork').fadeIn(1500);
       $('.imgResults').html('');
     }
@@ -363,6 +364,8 @@ $(() => {
         architecture = $('.architectureVal').val();
         imageSize = $('.imageSizeVal').val();
 
+        loader = true;
+
         var totalImages = read(imgDir[0]);
 
         updateLog('dir: ' + imgDir[0]);
@@ -447,6 +450,7 @@ $(() => {
           $('.progressbar').hide();
           $('#progressbar').hide();
           $('.actionDescription').html(``);
+          loader = false;
         });
       } else {
         updateLog('need more params');
