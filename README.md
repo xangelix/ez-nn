@@ -19,7 +19,6 @@ meant for a fun demonstration of TensorFlow.
 * Lots of commenting and documentation
 * Many more neural network options
 * Full users guide and documentation
-* More log data
 * Code shortening and increased efficiency
 * Cleanup confusing mix of classes and ids
 * Possible stopping of TensorBoard inside the application
