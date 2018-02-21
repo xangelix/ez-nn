@@ -214,6 +214,10 @@ $(() => {
     steps = $('.steps').val();
   });
 
+  $('.architectureVal').change(() => {
+    architecture = $('.architectureVal').val();
+  });
+
   $('#settings').click(() => {
     $('.options').slideToggle(70);
   });
@@ -352,6 +356,7 @@ $(() => {
         $('.loading').fadeIn(1500);
 
         steps = $('.steps').val();
+        architecture = $('.architectureVal').val();
 
         var totalImages = read(imgDir[0]);
 

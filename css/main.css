@@ -184,6 +184,16 @@ table.resultsTable td, table.resultsTable th {
   top: +40% !important;
 }
 
+.labeling4 {
+  left: -12% !important;
+  top: +69% !important;
+}
+
+.architectureVal {
+  transform: translate(-10%, +190%);
+  width: 125% !important;
+}
+
 .steps {
   transform: translate(-10%, +110%);
   width: 125% !important;
