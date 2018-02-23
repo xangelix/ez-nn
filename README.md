@@ -17,7 +17,6 @@ meant for a fun demonstration of TensorFlow.
 
 ## Upcoming Features (higher importance closer to the top)
 * Lots of commenting and documentation
-* Troubleshooting guide
 * "Behind the scenes" documentation
 * Code shortening and increased efficiency
 * Cleanup confusing mix of classes and ids
