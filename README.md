@@ -17,9 +17,12 @@ meant for a fun demonstration of TensorFlow.
 
 ## Upcoming Features (higher importance closer to the top)
 * Lots of commenting and documentation
-* Full users guide and documentation
+* Troubleshooting guide
+* "Behind the scenes" documentation
 * Code shortening and increased efficiency
 * Cleanup confusing mix of classes and ids
+* TensorBoard Guide
+* Support for .png images
 * Possible stopping of TensorBoard inside the application
 
 ## Known Issues
@@ -28,6 +31,15 @@ meant for a fun demonstration of TensorFlow.
 testing pictures
 
 ## Prerequisites
+
+* Internet - This application requires an active internet connection
+
+* [Linux](http://www.linuxfoundation.org): Fully functional, Tested on Ubuntu
+16.04.3 LTS
+* [Windows
+](https://www.microsoft.com/en-us/windows/): Functional except for [TensorBoard
+](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard)
+* [MacOS](https://www.apple.com/macos/): Likely functional but not tested
 
 * [Python ^3.6](https://www.python.org/) - or use
 [Anaconda](https://www.anaconda.com) if on windows
@@ -63,7 +75,7 @@ Happy forking!
 
 ## Users' Guide
 
-View the wiki [here](https://github.com/Matrix-Guy/ez-nn/wiki/)
+View the wiki page [here](https://github.com/Matrix-Guy/ez-nn/wiki/Users'-Guide)
 
 ## Troubleshooting
 
