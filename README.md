@@ -75,11 +75,11 @@ Happy forking!
 
 ## Users' Guide
 
-View the wiki page [here](https://github.com/Matrix-Guy/ez-nn/wiki/Users'-Guide)
+View the wiki page [here](https://github.com/Matrix-Guy/ez-nn/wiki/Users'-Guide).
 
 ## Troubleshooting
 
-WIP
+View the wiki page [here](https://github.com/Matrix-Guy/ez-nn/wiki/Users'-Guide#troubleshooting-common-problems-and-solutions).
 
 ## Built With
 
