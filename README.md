@@ -35,10 +35,18 @@ testing pictures
 
 * [Linux](http://www.linuxfoundation.org): Fully functional, Tested on Ubuntu
 16.04.3 LTS
+
+or
+
 * [Windows
 ](https://www.microsoft.com/en-us/windows/): Functional except for [TensorBoard
 ](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard)
+
+or
+
 * [MacOS](https://www.apple.com/macos/): Likely functional but not tested
+
+#### Installations
 
 * [Python ^3.6](https://www.python.org/) - or use
 [Anaconda](https://www.anaconda.com) if on windows
@@ -47,8 +55,8 @@ testing pictures
 ```tensorflow```**
 * [Node.js/npm](https://nodejs.org/en/) - for yarn and installation of
 dependencies
-* [yarn](https://yarnpkg.com/en/) for installation
-* [npm](https://nodejs.org/en/) for installation
+* [yarn](https://yarnpkg.com/en/) - for installation
+* [npm](https://nodejs.org/en/) - for installation
 
 ## Installing and Deployment
 
