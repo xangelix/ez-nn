@@ -61,6 +61,14 @@ Most editing you will want to do if any will take place in [tf.js](tf.js).
 
 Happy forking!
 
+## Users' Guide
+
+View the wiki [here](https://github.com/Matrix-Guy/ez-nn/wiki/)
+
+## Troubleshooting
+
+WIP
+
 ## Built With
 
 * [Python ^3.6](https://www.python.org)
