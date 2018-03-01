@@ -124,6 +124,8 @@ $(() => {
       $('.stopTensorBoard').hide();
       $('.testPic').hide();
       $('.createNeuralNetwork').hide();
+    } else if (body) {
+      tBstarted = true;
     }
 
     // Fade-in to avoid user seeing options before DOM load
@@ -204,6 +206,7 @@ $(() => {
       $('.createNeuralNetwork').fadeIn(1500);
       $('.imgResults').html('');
     }
+    loadOld();
   });
 
   $('.tfFilesDirectory').change(() => {
