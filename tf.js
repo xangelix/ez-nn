@@ -287,7 +287,10 @@ $(() => {
               let results = data.toString().substring(data.indexOf('s') + 1,
                 data.length).trim().split('\n');
               results = results.map((val) => {
-                return val.split(' ');
+                return [
+                  val.slice(0, val.lastIndexOf('.') - 2),
+                  val.slice(val.lastIndexOf('.') - 2, val.length)
+                    ].join('↔').split('↔');
               });
               _.chunk(results, 2);
 
