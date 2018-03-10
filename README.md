@@ -98,6 +98,9 @@ View the wiki page [here](https://github.com/Matrix-Guy/ez-nn/wiki/Users'-Guide#
 
 ### Pip Packages
 * [TensorFlow 1.5.1](https://www.tensorflow.org/)
+  - It should be noted that lots of the backend this project uses is provided
+  by the wonderful TensorFlow library which it itself is licensed under the
+  Apache License, Version 2.0 by Google Inc.
 
 ### Node Modules
 
