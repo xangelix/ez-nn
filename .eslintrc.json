@@ -1,8 +1,11 @@
 {
     "extends": ["eslint:recommended", "google"],
     "parserOptions": { "ecmaVersion": 7 },
-    "env" : {
-      "node" : true,
-      "jquery" : true
+    "env": {
+      "node": true,
+      "jquery": true
+    },
+    "rules": {
+      "no-multi-str": 0
     }
 }
