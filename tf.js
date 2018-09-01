@@ -51,7 +51,6 @@ let child2;
 
 // Updates log with parameter
 function updateLog(data) {
-
   // Removal of text after greater than 10000 characters
   if ($('#log').text().length > 10000) {
     $('#log').html($('#log').html().substring(1000, 10000));
@@ -107,7 +106,6 @@ function loadOld() {
 
 // jQuery on DOM load
 $(() => {
-
   loadOld();
 
   updateProgressBar(loadingIndex);
@@ -115,7 +113,6 @@ $(() => {
 
   // Test if TensorBoard is already running
   request('http://localhost:6006/', (err, res, body) => {
-
     // Hides buttons if TensorBoard is not running
     if (!body) {
       $('.stopTensorBoard').hide();
@@ -144,7 +141,6 @@ $(() => {
 
   // Start TensorBoard button on click
   $('#startTensorBoard').click(() => {
-
     if (!tfFilesDirectory) {
       updateLog('need more parameters');
       dialog.showErrorBox('Invalid Parameters!',
@@ -268,11 +264,9 @@ $(() => {
   });
 
   $('#testPic').click(() => {
-
     // Opens browse dialog for jpg images only
     dialog.showOpenDialog({ filters: [ { name: 'JPG Images',
       extensions: ['jpg'] } ] }, (data1) => {
-
         child1 = spawn(shellType, [shellFlag,
           ('{0}python -m scripts.label_image --graph={1}/retrained_graph.pb \
           --labels={1}/retrained_labels.txt --image={2}').format(tfCD,
@@ -353,7 +347,6 @@ $(() => {
             updateLog(code.toString());
           });
       });
-
   });
 
   $('#createNeuralNetwork').click(() => {
@@ -460,7 +453,6 @@ $(() => {
         dialog.showErrorBox('Invalid Parameters!',
           'Please make sure all settings fields are filled!');
       }
-
   });
 });
 
