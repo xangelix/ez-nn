@@ -6,6 +6,7 @@
       "jquery": true
     },
     "rules": {
-      "no-multi-str": 0
+      "no-multi-str": 0,
+      "no-console": 0
     }
 }
