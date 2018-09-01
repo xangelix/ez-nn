@@ -1,6 +1,3 @@
-/*jshint esversion: 6*/
-/*jshint multistr: true */
-
 // Debug defines verbosity
 let debug = true;
 
