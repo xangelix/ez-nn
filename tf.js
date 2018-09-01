@@ -162,12 +162,12 @@ $(() => {
           updateLog('me again: ' +
           '{0} && tensorboard --logdir {1}/training_summaries &'.format(
             shellSource, tfFilesDirectory));
-          child.stdout.on('data', function (data) {
+          child.stdout.on('data', function(data) {
             updateLog('stdout: ' + data.toString());
             updateLog(data.toString());
           });
 
-          child.stderr.on('data', function (data) {
+          child.stderr.on('data', function(data) {
             updateLog('stderr: ' + data.toString());
             if (data.includes(`(Press CTRL+C to quit)`)) {
               loadOld();
@@ -181,7 +181,7 @@ $(() => {
             $('.stopTensorBoard').fadeIn(1500);
           });
 
-          child.on('exit', function (code) {
+          child.on('exit', function(code) {
             updateLog('child process exited with code ');
             $('.loading').hide();
             tBstarted = false;
@@ -271,7 +271,7 @@ $(() => {
           ('{0}python -m scripts.label_image --graph={1}/retrained_graph.pb \
           --labels={1}/retrained_labels.txt --image={2}').format(tfCD,
             tfFilesDirectory, data1)]);
-          child1.stdout.on('data', function (data) {
+          child1.stdout.on('data', function(data) {
             updateLog('stdout: ' + data.toString());
             updateLog(data.toString());
             if (data.includes(`Evaluation time (1-image):`)) {
@@ -337,12 +337,12 @@ $(() => {
             }
           });
 
-          child1.stderr.on('data', function (data) {
+          child1.stderr.on('data', function(data) {
             updateLog('stderr: ' + data.toString());
             updateLog(data.toString());
           });
 
-          child1.on('exit', function (code) {
+          child1.on('exit', function(code) {
             updateLog('child process exited with code ' + code);
             updateLog(code.toString());
           });
@@ -376,7 +376,7 @@ $(() => {
             bottleneckDirFlag, tfFilesDirectory, stepsFlag, steps, modelDir,
             summariesDir, architecture, imageSize, imgDir)]);
 
-        child2.stdout.on('data', function (data) {
+        child2.stdout.on('data', function(data) {
           updateLog('stdout: ' + data.toString());
           if (data.includes(`variables to const ops.`)) {
             training = false;
@@ -402,7 +402,7 @@ $(() => {
           }
         });
 
-        child2.stderr.on('data', function (data) {
+        child2.stderr.on('data', function(data) {
           updateLog('stderr: ' + data.toString());
           if (data.toString().includes('Creating bottleneck')) {
             if (!creatingNN) {
@@ -439,7 +439,7 @@ $(() => {
           updateLog(data.toString());
         });
 
-        child2.on('exit', function (code) {
+        child2.on('exit', function(code) {
           updateLog('child process exited with code ' + code.toString());
           updateLog('child process exited with code ' + code.toString());
           $('.loading').hide();
