@@ -2,16 +2,16 @@
 let debug = true;
 
 // OS dependent and command flag constants
-const isWin = process.platform === 'win32',
-      shellType = isWin ? 'cmd' : 'bash',
-      shellFlag = isWin ? '/c' : '-c',
-      shellSource = isWin ? 'activate tensorflow' :
-        'source ~/tensorflow/bin/activate',
-      stepsFlag = ' --how_many_training_steps=',
-      modelDir = ' --model_dir=',
-      summariesDir = '/models/ --summaries_dir=',
-      bottleneckDirFlag = 'python -m scripts.retrain --bottleneck_dir=',
-      tfCD = 'cd tf/ && ';
+const isWin = process.platform === 'win32';
+const shellType = isWin ? 'cmd' : 'bash';
+const shellFlag = isWin ? '/c' : '-c';
+const shellSource = isWin ? 'activate tensorflow' :
+        'source ~/tensorflow/bin/activate';
+const stepsFlag = ' --how_many_training_steps=';
+const modelDir = ' --model_dir=';
+const summariesDir = '/models/ --summaries_dir=';
+const bottleneckDirFlag = 'python -m scripts.retrain --bottleneck_dir=';
+const tfCD = 'cd tf/ && ';
 
 const bottleneckConfig = `
 {0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}/training_summaries/mobilenet_{7}_{8} \
@@ -20,13 +20,13 @@ const bottleneckConfig = `
 --architecture=mobilenet_{7}_{8} --image_dir={9}`;
 
 // Node.js requires and configurations
-const spawn = require('child_process').spawn,
-      {dialog} = require('electron').remote,
-      _ = require('lodash'),
-      format = require('string-format'),
-      request = require('request'),
-      read = require('fs-readdir-recursive'),
-      fs = require('fs');
+const spawn = require('child_process').spawn;
+const {dialog} = require('electron').remote;
+const _ = require('lodash');
+const format = require('string-format');
+const request = require('request');
+const read = require('fs-readdir-recursive');
+const fs = require('fs');
 
 format.extend(String.prototype);
 
