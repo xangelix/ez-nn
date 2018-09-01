@@ -13,6 +13,12 @@ const isWin = process.platform === 'win32',
       bottleneckDirFlag = 'python -m scripts.retrain --bottleneck_dir=',
       tfCD = 'cd tf/ && ';
 
+const bottleneckConfig = `
+{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}/training_summaries/mobilenet_{7}_{8} \
+--output_graph={2}/retrained_graph.pb \
+--output_labels={2}/retrained_labels.txt \
+--architecture=mobilenet_{7}_{8} --image_dir={9}`;
+
 // Node.js requires and configurations
 const spawn = require('child_process').spawn,
       {dialog} = require('electron').remote,
@@ -95,7 +101,9 @@ function loadOld() {
       oldExists = false;
       $('.testPic').hide();
     }
-    if (!oldExists && tBstarted && !loader && $('.photosDirectory').val().trim()) {
+    if (
+      !oldExists && tBstarted && !loader && $('.photosDirectory').val().trim()
+    ) {
       $('.createNeuralNetwork').fadeIn(1500);
       $('.imgResults').html('');
     }
@@ -293,42 +301,42 @@ $(() => {
 
                 updateLog(resultsHTMLF);
 
-                $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                  percentMe(results[0][1])));
+                $('.imgResults').html(resultsHTMLF.format(data1,
+                  results[0][0], percentMe(results[0][1])));
               } else if (categories === 2) {
                   resultsHTMLF = resultsHTML + cat1 + cat2 + resultsSuffixHTML;
 
                   updateLog(resultsHTMLF);
-                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                    percentMe(results[0][1]), results[1][0],
-                    percentMe(results[1][1])));
+                  $('.imgResults').html(resultsHTMLF.format(data1,
+                    results[0][0], percentMe(results[0][1]),
+                    results[1][0], percentMe(results[1][1])));
               } else if (categories === 3) {
                   resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 +
                     resultsSuffixHTML;
                   updateLog(resultsHTMLF);
-                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                    percentMe(results[0][1]), results[1][0],
-                    percentMe(results[1][1]), results[2][0],
-                    percentMe(results[2][1])));
+                  $('.imgResults').html(resultsHTMLF.format(data1,
+                    results[0][0], percentMe(results[0][1]),
+                    results[1][0], percentMe(results[1][1]),
+                    results[2][0], percentMe(results[2][1])));
               } else if (categories === 4) {
                   resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 +
                     resultsSuffixHTML;
                   updateLog(resultsHTMLF);
-                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                    percentMe(results[0][1]), results[1][0],
-                    percentMe(results[1][1]), results[2][0],
-                    percentMe(results[2][1]), results[3][0],
-                    percentMe(results[3][1])));
+                  $('.imgResults').html(resultsHTMLF.format(data1,
+                    results[0][0], percentMe(results[0][1]),
+                    results[1][0], percentMe(results[1][1]),
+                    results[2][0], percentMe(results[2][1]),
+                    results[3][0], percentMe(results[3][1])));
               } else if (categories === 5 || categories > 5) {
-                  resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 + cat5 +
-                    resultsSuffixHTML;
+                  resultsHTMLF = resultsHTML + cat1 + cat2 + cat3 + cat4 +
+                    cat5 + resultsSuffixHTML;
                   updateLog(resultsHTMLF);
-                  $('.imgResults').html(resultsHTMLF.format(data1, results[0][0],
-                    percentMe(results[0][1]), results[1][0],
-                    percentMe(results[1][1]), results[2][0],
-                    percentMe(results[2][1]), results[3][0],
-                    percentMe(results[3][1]), results[4][0],
-                    percentMe(results[4][1])));
+                  $('.imgResults').html(resultsHTMLF.format(data1,
+                    results[0][0], percentMe(results[0][1]),
+                    results[1][0], percentMe(results[1][1]),
+                    results[2][0], percentMe(results[2][1]),
+                    results[3][0], percentMe(results[3][1]),
+                    results[4][0], percentMe(results[4][1])));
               } else {
                   updateLog('invalid range of categories');
               }
@@ -366,10 +374,7 @@ $(() => {
         updateLog('amount of files: ' + totalImages.length);
 
         child2 = spawn(shellType, [shellFlag,
-          '{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}/training_summaries/mobilenet_{7}_{8} \
-          --output_graph={2}/retrained_graph.pb \
-          --output_labels={2}/retrained_labels.txt \
-          --architecture=mobilenet_{7}_{8} --image_dir={9}'.format(tfCD,
+          bottleneckConfig.format(tfCD,
             bottleneckDirFlag, tfFilesDirectory, stepsFlag, steps, modelDir,
             summariesDir, architecture, imageSize, imgDir)]);
 
