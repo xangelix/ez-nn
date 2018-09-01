@@ -6,7 +6,7 @@ const isWin = process.platform === 'win32';
 const shellType = isWin ? 'cmd' : 'bash';
 const shellFlag = isWin ? '/c' : '-c';
 const shellSource = isWin ? 'activate tensorflow' :
-        'source ~/tensorflow/bin/activate';
+  'source ~/tensorflow/bin/activate';
 const stepsFlag = ' --how_many_training_steps=';
 const modelDir = ' --model_dir=';
 const summariesDir = '/models/ --summaries_dir=';
