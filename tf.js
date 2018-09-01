@@ -88,7 +88,9 @@ function percentMe(num) {
 
 // Options change based on the existance of old neural network data
 function loadOld() {
-  if (!tBstarted) {$('.startTensorBoard').fadeIn(1500);}
+  if (!tBstarted) {
+    $('.startTensorBoard').fadeIn(1500);
+  }
 
   updateLog('testing...\n{0}/retrained_graph.pb'.format(tfFilesDirectory));
 
