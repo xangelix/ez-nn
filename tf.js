@@ -7,7 +7,6 @@ const isWin = process.platform === 'win32',
       shellFlag = isWin ? '/c' : '-c',
       shellSource = isWin ? 'activate tensorflow' :
         'source ~/tensorflow/bin/activate',
-      createNNPrefix = 'cd tf/ && python -m scripts.label_image',
       stepsFlag = ' --how_many_training_steps=',
       modelDir = ' --model_dir=',
       summariesDir = '/models/ --summaries_dir=',
@@ -15,8 +14,7 @@ const isWin = process.platform === 'win32',
       tfCD = 'cd tf/ && ';
 
 // Node.js requires and configurations
-const ipcRenderer = require('electron').ipcRenderer,
-      spawn = require('child_process').spawn,
+const spawn = require('child_process').spawn,
       {dialog} = require('electron').remote,
       _ = require('lodash'),
       format = require('string-format'),
