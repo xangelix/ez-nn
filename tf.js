@@ -67,13 +67,13 @@ function updateLog(data) {
 
 function maxProgressBar(base) {
   $('.progressbar').progressbar({
-    max: base
+    max: base,
   });
 }
 
 function updateProgressBar(percent) {
   $('.progressbar').progressbar({
-    value: percent
+    value: percent,
   });
 }
 
@@ -280,7 +280,7 @@ $(() => {
               results = results.map((val) => {
                 return [
                   val.slice(0, val.lastIndexOf('.') - 2),
-                  val.slice(val.lastIndexOf('.') - 2, val.length)
+                  val.slice(val.lastIndexOf('.') - 2, val.length),
                     ].join('↔').split('↔');
               });
               _.chunk(results, 2);
