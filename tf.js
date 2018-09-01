@@ -362,7 +362,7 @@ $(() => {
 
         loader = true;
 
-        var totalImages = read(imgDir[0]);
+        let totalImages = read(imgDir[0]);
 
         updateLog('dir: ' + imgDir[0]);
         updateLog('amount of files: ' + totalImages.length);
