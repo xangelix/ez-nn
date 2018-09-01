@@ -84,7 +84,7 @@ function percentMe(num) {
 
 // Options change based on the existance of old neural network data
 function loadOld() {
-  if (!tBstarted) { $('.startTensorBoard').fadeIn(1500); }
+  if (!tBstarted) {$('.startTensorBoard').fadeIn(1500);}
 
   updateLog('testing...\n{0}/retrained_graph.pb'.format(tfFilesDirectory));
 
@@ -224,7 +224,7 @@ $(() => {
   });
 
   $('.browse').click(() => {
-    dialog.showOpenDialog({ properties: ['openDirectory'] }, (data) => {
+    dialog.showOpenDialog({properties: ['openDirectory']}, (data) => {
       if (data) {
         updateLog(data[0]);
         $('.label1').addClass('active');
@@ -235,7 +235,7 @@ $(() => {
   });
 
   $('.browsetf').click(() => {
-    dialog.showOpenDialog({ properties: ['openDirectory'] }, (data) => {
+    dialog.showOpenDialog({properties: ['openDirectory']}, (data) => {
       if (data) {
         updateLog(data[0]);
         $('.label2').addClass('active');
@@ -265,8 +265,8 @@ $(() => {
 
   $('#testPic').click(() => {
     // Opens browse dialog for jpg images only
-    dialog.showOpenDialog({ filters: [ { name: 'JPG Images',
-      extensions: ['jpg'] } ] }, (data1) => {
+    dialog.showOpenDialog({filters: [{name: 'JPG Images',
+      extensions: ['jpg']}]}, (data1) => {
         child1 = spawn(shellType, [shellFlag,
           ('{0}python -m scripts.label_image --graph={1}/retrained_graph.pb \
           --labels={1}/retrained_labels.txt --image={2}').format(tfCD,
