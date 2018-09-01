@@ -367,7 +367,6 @@ $(() => {
         updateLog('dir: ' + imgDir[0]);
         updateLog('amount of files: ' + totalImages.length);
 
-        //.format(tfFilesDirectory)
         child2 = spawn(shellType, [shellFlag,
           '{0}{1}{2}/bottlenecks{3}{4}{5}{2}{6}{2}/training_summaries/mobilenet_{7}_{8} \
           --output_graph={2}/retrained_graph.pb \
